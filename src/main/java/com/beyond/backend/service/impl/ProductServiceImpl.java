@@ -5,8 +5,6 @@ import com.beyond.backend.data.dto.ProductResponseDto;
 import com.beyond.backend.data.entity.Product;
 import com.beyond.backend.data.repository.ProductRepository;
 import com.beyond.backend.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +23,10 @@ import org.springframework.stereotype.Service;
  * -----------------------------------------------------------
  * 2025-01-18        hjsong             최초 생성
  * 2025-01-20        hjsong             파일명 이니셜(_shj) 삭제
+ * 2025-01-23        hjsong             로깅 삭제
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-
-    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
-
     private final ProductRepository productRepository;
 
     /**
@@ -51,12 +47,8 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductResponseDto getProduct(Long number) {
-        logger.info("[getProduct] input number : {}", number);
         Product product = productRepository.findById(number).get();
 
-        logger.info("[getProduct] product number : {}, name : {}"
-                , product.getNumber()
-                , product.getName());
         ProductResponseDto productResponseDto = new ProductResponseDto();
         productResponseDto.setNumber(product.getNumber());
         productResponseDto.setName(product.getName());
@@ -74,14 +66,12 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto){
-        logger.info("[saveProduct] productDTO : {}", productDto.toString());
         Product product = new Product();
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setStock(productDto.getStock());
 
         Product savedProduct = productRepository.save(product);
-        logger.info("[saveProduct] savedProduct : {}", savedProduct);
 
         ProductResponseDto productResponseDto = new ProductResponseDto();
         productResponseDto.setNumber(savedProduct.getNumber());
