@@ -36,4 +36,6 @@ public class Project extends BaseEntity {
     private String name;
 
     private String content;
+
+    private int userCount;
 }
