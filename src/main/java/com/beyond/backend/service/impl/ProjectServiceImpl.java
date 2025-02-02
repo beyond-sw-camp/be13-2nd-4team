@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
      * @see ProjectResponseDto
      */
     @Override
-    public ProjectResponseDto postProject(ProjectDto projectDto) {
+    public ProjectResponseDto createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setContent(projectDto.getContent());

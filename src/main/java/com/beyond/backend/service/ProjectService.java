@@ -21,5 +21,5 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
 
 public interface ProjectService {
 
-    ProjectResponseDto postProject(ProjectDto projectDto);
+    ProjectResponseDto createProject(ProjectDto projectDto);
 }
