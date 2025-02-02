@@ -1,7 +1,5 @@
 package com.beyond.backend.controller;
 
-import com.beyond.backend.data.dto.ProductDto;
-import com.beyond.backend.data.dto.ProductResponseDto;
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
 import com.beyond.backend.service.ProjectService;
@@ -83,5 +81,13 @@ public class ProjectController {
                 projectDto.getUserCount());
 
         return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
+    }
+
+    @Operation(summary = "프로젝트 삭제 메서드", description = "프로젝트 삭제 메서드 입니다.")
+    @DeleteMapping
+    public ResponseEntity<String> deleteProject(Long id) throws Exception {
+        projectService.deleteProject(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }
 }
