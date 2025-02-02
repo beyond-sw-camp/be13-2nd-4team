@@ -108,4 +108,14 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectResponseDto;
     }
+
+    /**
+     * 프로젝트 삭제
+     * @param id 상품 ID
+     * @throws Exception
+     */
+    @Override
+    public void deleteProject(Long id) throws Exception {
+        projectRepository.deleteById(id);
+    }
 }
