@@ -48,6 +48,20 @@ public class ProjectController {
         return "Hello World";
     }
 
+    /**
+     * Get product response entity.
+     *
+     * @param id the number
+     * @return the response entity
+     */
+    @Operation(summary = "프로젝트 조회 메서드", description = "프로젝트 조회 메서드입니다.")
+    @GetMapping()
+    public ResponseEntity<ProjectResponseDto> getProject(Long id){
+        ProjectResponseDto projectResponseDto = projectService.getProject(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
+    }
+
     @Operation(summary = "프로젝트 등록 메서드", description = "프로젝트 등록 메서드입니다.")
     @PostMapping()
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectDto projectDto) {
@@ -56,4 +70,6 @@ public class ProjectController {
 
         return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
     }
+
+
 }
