@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
+
     private final ProjectRepository projectRepository;
 
     /**
@@ -57,6 +58,19 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setName(savedProject.getName());
         projectResponseDto.setContent(savedProject.getContent());
         projectResponseDto.setUserCount(savedProject.getUserCount());
+
+        return projectResponseDto;
+    }
+
+    @Override
+    public ProjectResponseDto getProject(Long id) {
+        Project project = projectRepository.findById(id).get();
+
+        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
+        projectResponseDto.setId(project.getId());
+        projectResponseDto.setName(project.getName());
+        projectResponseDto.setContent(project.getContent());
+        projectResponseDto.setUserCount(project.getUserCount());
 
         return projectResponseDto;
     }
