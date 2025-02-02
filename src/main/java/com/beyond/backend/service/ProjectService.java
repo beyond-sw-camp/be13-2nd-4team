@@ -22,4 +22,6 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
 public interface ProjectService {
 
     ProjectResponseDto createProject(ProjectDto projectDto);
+
+    ProjectResponseDto getProject(Long id);
 }

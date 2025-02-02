@@ -26,7 +26,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ProjectResponseDto {
 
-    private int id;
+    private Long id;
 
     private String name;
 
