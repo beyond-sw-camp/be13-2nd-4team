@@ -16,6 +16,7 @@ import lombok.*;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 1. 31.        jaewoo             최초 생성
+ * 2025. 2. 2.         jaewoo             내용 수정
  */
 
 @Getter
@@ -25,15 +26,9 @@ import lombok.*;
 @AllArgsConstructor
 public class ProjectDto {
 
-    private int project_id;
+    private String name;
 
-    private int team_id;
+    private String content;
 
-    private String project_name;
-
-    private String duration;
-
-    private String created_date;
-
-    private String updated_date;
+    private int userCount;
 }
