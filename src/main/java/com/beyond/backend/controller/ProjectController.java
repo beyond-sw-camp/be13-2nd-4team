@@ -71,5 +71,17 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
     }
 
+    @Operation(summary = "프로젝트 수정 메서드", description = "프로젝트 수정 메서드입니다.")
+    @PutMapping
+    public ResponseEntity<ProjectResponseDto> updateProject(
+            Long id, @RequestBody ProjectDto projectDto) throws Exception {
 
+        ProjectResponseDto projectResponseDto = projectService.updateProject(
+                id,
+                projectDto.getName(),
+                projectDto.getContent(),
+                projectDto.getUserCount());
+
+        return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
+    }
 }
