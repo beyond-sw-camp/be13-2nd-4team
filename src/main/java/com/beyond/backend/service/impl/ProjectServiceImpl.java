@@ -62,6 +62,12 @@ public class ProjectServiceImpl implements ProjectService {
         return projectResponseDto;
     }
 
+    /**
+     * 프로젝트 조회
+     * @param id 프로젝트 ID
+     * @return ProjectResponseDto projectResponseDto
+     * @see ProjectResponseDto
+     */
     @Override
     public ProjectResponseDto getProject(Long id) {
         Project project = projectRepository.findById(id).get();
@@ -71,6 +77,34 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setName(project.getName());
         projectResponseDto.setContent(project.getContent());
         projectResponseDto.setUserCount(project.getUserCount());
+
+        return projectResponseDto;
+    }
+
+    /**
+     * 프로젝트 업데이트
+     * @param id 프로젝트 ID
+     * @param name 프로젝트 명
+     * @param content 프로젝트 내용
+     * @param userCount 프로젝트 팀원 수
+     * @return ProjectResponseDto projectResponseDto
+     * @see ProjectResponseDto
+     * @throws Exception
+     */
+    @Override
+    public ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception {
+        Project foundProject = projectRepository.findById(id).get();
+        foundProject.setName(name);
+        foundProject.setContent(content);
+        foundProject.setUserCount(userCount);
+
+        Project updateProject = projectRepository.save(foundProject);
+
+        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
+        projectResponseDto.setId(updateProject.getId());
+        projectResponseDto.setName(updateProject.getName());
+        projectResponseDto.setContent(updateProject.getContent());
+        projectResponseDto.setUserCount(updateProject.getUserCount());
 
         return projectResponseDto;
     }
