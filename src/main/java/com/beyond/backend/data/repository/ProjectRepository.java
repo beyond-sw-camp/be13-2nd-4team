@@ -1,6 +1,6 @@
 package com.beyond.backend.data.repository;
 
-import com.beyond.backend.data.entity.Product;
+import com.beyond.backend.data.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -17,7 +17,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
+ * 2025. 2. 2.        jaewoo             오타 수정
  */
 
-public interface ProjectRepository extends JpaRepository<Product, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 }
