@@ -17,6 +17,7 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
+ * 2025. 2. 2.        jaewoo             파라미터 명 변경
  */
 
 public interface ProjectService {

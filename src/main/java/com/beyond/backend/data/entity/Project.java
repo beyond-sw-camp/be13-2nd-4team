@@ -20,6 +20,7 @@ import lombok.ToString;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 1.        jaewoo             최초 생성
+ * 2025. 2. 3.        jaewoo             변수명 수정
  */
 @Entity
 @Getter

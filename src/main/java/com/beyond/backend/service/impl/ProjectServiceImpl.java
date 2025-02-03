@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
+ * 2025. 2. 3.        jaewoo             함수명 수정
  */
 
 @Service
@@ -86,17 +87,17 @@ public class ProjectServiceImpl implements ProjectService {
      * @param id 프로젝트 ID
      * @param name 프로젝트 명
      * @param content 프로젝트 내용
-     * @param userCount 프로젝트 팀원 수
+     * @param user_Count 프로젝트 팀원 수
      * @return ProjectResponseDto projectResponseDto
      * @see ProjectResponseDto
      * @throws Exception
      */
     @Override
-    public ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception {
+    public ProjectResponseDto updateProject(Long id, String name, String content, int user_Count) throws Exception {
         Project foundProject = projectRepository.findById(id).get();
         foundProject.setName(name);
         foundProject.setContent(content);
-        foundProject.setUser_Count(userCount);
+        foundProject.setUser_Count(user_Count);
 
         Project updateProject = projectRepository.save(foundProject);
 
