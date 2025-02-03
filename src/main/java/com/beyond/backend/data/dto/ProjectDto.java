@@ -30,5 +30,5 @@ public class ProjectDto {
 
     private String content;
 
-    private int userCount;
+    private int user_Count;
 }

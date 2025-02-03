@@ -78,7 +78,7 @@ public class ProjectController {
                 id,
                 projectDto.getName(),
                 projectDto.getContent(),
-                projectDto.getUserCount());
+                projectDto.getUser_Count());
 
         return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
     }

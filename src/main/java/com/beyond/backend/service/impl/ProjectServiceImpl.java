@@ -50,14 +50,14 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setContent(projectDto.getContent());
-        project.setUserCount(projectDto.getUserCount());
+        project.setUser_Count(projectDto.getUser_Count());
 
         Project savedProject = projectRepository.save(project);
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
         projectResponseDto.setId(savedProject.getId());
         projectResponseDto.setName(savedProject.getName());
         projectResponseDto.setContent(savedProject.getContent());
-        projectResponseDto.setUserCount(savedProject.getUserCount());
+        projectResponseDto.setUser_Count(savedProject.getUser_Count());
 
         return projectResponseDto;
     }
@@ -76,7 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setId(project.getId());
         projectResponseDto.setName(project.getName());
         projectResponseDto.setContent(project.getContent());
-        projectResponseDto.setUserCount(project.getUserCount());
+        projectResponseDto.setUser_Count(project.getUser_Count());
 
         return projectResponseDto;
     }
@@ -96,7 +96,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project foundProject = projectRepository.findById(id).get();
         foundProject.setName(name);
         foundProject.setContent(content);
-        foundProject.setUserCount(userCount);
+        foundProject.setUser_Count(userCount);
 
         Project updateProject = projectRepository.save(foundProject);
 
@@ -104,7 +104,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setId(updateProject.getId());
         projectResponseDto.setName(updateProject.getName());
         projectResponseDto.setContent(updateProject.getContent());
-        projectResponseDto.setUserCount(updateProject.getUserCount());
+        projectResponseDto.setUser_Count(updateProject.getUser_Count());
 
         return projectResponseDto;
     }

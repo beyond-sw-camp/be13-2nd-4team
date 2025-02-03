@@ -25,7 +25,7 @@ public interface ProjectService {
 
     ProjectResponseDto getProject(Long id);
 
-    ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception;
+    ProjectResponseDto updateProject(Long id, String name, String content, int user_Count) throws Exception;
 
     void deleteProject(Long id) throws Exception;
 }
