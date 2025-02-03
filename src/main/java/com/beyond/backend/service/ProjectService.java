@@ -17,7 +17,8 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
- * 2025. 2. 2.        jaewoo             파라미터 명 변경
+ * 2025. 2. 3.        jaewoo             파라미터 명 변경
+ * 2025. 2. 4.        jaewoo             파라미터 명 변경
  */
 
 public interface ProjectService {
@@ -26,7 +27,7 @@ public interface ProjectService {
 
     ProjectResponseDto getProject(Long id);
 
-    ProjectResponseDto updateProject(Long id, String name, String content, int user_Count) throws Exception;
+    ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception;
 
     void deleteProject(Long id) throws Exception;
 }

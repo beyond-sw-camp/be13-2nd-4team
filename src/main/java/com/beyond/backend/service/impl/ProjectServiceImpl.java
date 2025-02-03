@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             함수명 수정
+ * 2025. 2. 4.        jaewoo             함수명 수정
  */
 
 @Service
@@ -51,14 +52,14 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setContent(projectDto.getContent());
-        project.setUser_Count(projectDto.getUser_Count());
+        project.setUserCount(projectDto.getUserCount());
 
         Project savedProject = projectRepository.save(project);
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
         projectResponseDto.setId(savedProject.getId());
         projectResponseDto.setName(savedProject.getName());
         projectResponseDto.setContent(savedProject.getContent());
-        projectResponseDto.setUser_Count(savedProject.getUser_Count());
+        projectResponseDto.setUserCount(savedProject.getUserCount());
 
         return projectResponseDto;
     }
@@ -77,7 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setId(project.getId());
         projectResponseDto.setName(project.getName());
         projectResponseDto.setContent(project.getContent());
-        projectResponseDto.setUser_Count(project.getUser_Count());
+        projectResponseDto.setUserCount(project.getUserCount());
 
         return projectResponseDto;
     }
@@ -87,17 +88,17 @@ public class ProjectServiceImpl implements ProjectService {
      * @param id 프로젝트 ID
      * @param name 프로젝트 명
      * @param content 프로젝트 내용
-     * @param user_Count 프로젝트 팀원 수
+     * @param userCount 프로젝트 팀원 수
      * @return ProjectResponseDto projectResponseDto
      * @see ProjectResponseDto
      * @throws Exception
      */
     @Override
-    public ProjectResponseDto updateProject(Long id, String name, String content, int user_Count) throws Exception {
+    public ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception {
         Project foundProject = projectRepository.findById(id).get();
         foundProject.setName(name);
         foundProject.setContent(content);
-        foundProject.setUser_Count(user_Count);
+        foundProject.setUserCount(userCount);
 
         Project updateProject = projectRepository.save(foundProject);
 
@@ -105,7 +106,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectResponseDto.setId(updateProject.getId());
         projectResponseDto.setName(updateProject.getName());
         projectResponseDto.setContent(updateProject.getContent());
-        projectResponseDto.setUser_Count(updateProject.getUser_Count());
+        projectResponseDto.setUserCount(updateProject.getUserCount());
 
         return projectResponseDto;
     }

@@ -17,6 +17,7 @@ import lombok.*;
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             변수명 수정
+ * 2025. 2. 4.        jaewoo             변수명 수정
  */
 
 @Getter
@@ -33,5 +34,5 @@ public class ProjectResponseDto {
 
     private String content;
 
-    private int user_Count;
+    private int userCount;
 }
