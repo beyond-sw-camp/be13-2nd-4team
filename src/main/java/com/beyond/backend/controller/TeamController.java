@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -59,6 +60,14 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.OK).body(teamDto);
     }
+
+    @Operation(summary = "팀 조회 메서드", description = "팀 조회 메서드 입니다.")
+    @GetMapping()
+    public ResponseEntity<TeamResponseDto> getTeam(Long teamId) {
+        TeamResponseDto teamResponseDto = teamService.getTeam(teamId);
+        return ResponseEntity.status(HttpStatus.OK).body(teamResponseDto);
+    }
+
 
 
 

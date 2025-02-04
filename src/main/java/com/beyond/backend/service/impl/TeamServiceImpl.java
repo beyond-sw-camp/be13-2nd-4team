@@ -78,11 +78,22 @@ public class TeamServiceImpl implements TeamService {
         return teamResponseDto;
     }
 
+    /**
+     * 팀 정보 조회
+     * @param id 팀 ID
+     * @return TeamResponseDto teamResponseDto
+     */
     @Override
-    public TeamResponseDto getTeamById(int id) {
-        return null;
-    }
+    public TeamResponseDto getTeam(Long id) {
+        Team team = teamRepository.findById(id).get();
 
+        TeamResponseDto teamResponseDto = new TeamResponseDto();
+        teamResponseDto.setName(team.getName());
+        teamResponseDto.setGoal(team.getGoal());
+        teamResponseDto.setLeaderid(team.getLeaderid());
+
+        return teamResponseDto;
+    }
     @Override
     public void deleteTeam(int id) {
 

@@ -25,7 +25,7 @@ public interface TeamService {
 
     TeamResponseDto updateTeam(TeamResponseDto team);
 
-    TeamResponseDto getTeamById(int id);
+    TeamResponseDto getTeam(Long id);
 
     void deleteTeam(int id);
 }
