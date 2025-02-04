@@ -2,6 +2,7 @@ package com.beyond.backend.service;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
+import com.beyond.backend.data.entity.Team;
 
 /**
  * <p>
@@ -22,9 +23,9 @@ import com.beyond.backend.data.dto.TeamResponseDto;
 public interface TeamService {
     TeamResponseDto createTeam(TeamDto team);
 
-    TeamDto updateTeam(TeamDto team);
+    TeamResponseDto updateTeam(TeamResponseDto team);
 
-    TeamDto getTeamById(int id);
+    TeamResponseDto getTeamById(int id);
 
     void deleteTeam(int id);
 }

@@ -61,13 +61,25 @@ public class TeamServiceImpl implements TeamService {
         return teamResponseDto;
     }
 
+    /**
+     * 팀 정보 수정
+     *
+     * @param team 팀 정보
+     * @return TeamResponseDto teamResponseDto
+     */
     @Override
-    public TeamDto updateTeam(TeamDto team) {
-        return null;
+    public TeamResponseDto updateTeam(TeamResponseDto team) {
+        TeamResponseDto teamResponseDto = new TeamResponseDto();
+        teamResponseDto.setId(team.getId());
+        teamResponseDto.setName(team.getName());
+        teamResponseDto.setGoal(team.getGoal());
+        teamResponseDto.setLeaderid(team.getLeaderid());
+
+        return teamResponseDto;
     }
 
     @Override
-    public TeamDto getTeamById(int id) {
+    public TeamResponseDto getTeamById(int id) {
         return null;
     }
 
