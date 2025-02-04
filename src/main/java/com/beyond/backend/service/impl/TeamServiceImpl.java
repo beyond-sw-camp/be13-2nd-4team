@@ -94,8 +94,14 @@ public class TeamServiceImpl implements TeamService {
 
         return teamResponseDto;
     }
-    @Override
-    public void deleteTeam(int id) {
 
+    /**
+     * 팀 삭제
+     * @param id 팀 ID
+     * @throws Exception
+     */
+    @Override
+    public void deleteTeam(Long id) throws Exception {
+        teamRepository.deleteById(id);
     }
 }

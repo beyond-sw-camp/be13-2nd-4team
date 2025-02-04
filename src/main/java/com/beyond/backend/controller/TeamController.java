@@ -7,15 +7,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URISyntaxException;
 
 /**
  * <p>
@@ -68,7 +67,11 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamResponseDto);
     }
 
-
-
+    @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")
+    @DeleteMapping()
+    public ResponseEntity<String> deleteTeam(Long teamId) throws Exception {
+        teamService.deleteTeam(teamId);
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
+    }
 
 }

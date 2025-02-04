@@ -2,7 +2,6 @@ package com.beyond.backend.service;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.entity.Team;
 
 /**
  * <p>
@@ -27,5 +26,6 @@ public interface TeamService {
 
     TeamResponseDto getTeam(Long id);
 
-    void deleteTeam(int id);
+
+    void deleteTeam(Long id) throws Exception;
 }
