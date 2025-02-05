@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>fileName       : TeamController
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    :
+ * <p>description    :  팀 컨트롤러
  */
 /*
  * ===========================================================
