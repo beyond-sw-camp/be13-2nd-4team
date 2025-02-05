@@ -27,6 +27,8 @@ import java.time.LocalDateTime;
  * -----------------------------------------------------------
  * 2025-01-18        hjsong             최초 생성
  * 2025-01-20        hjsong             파일명 이니셜(_shj) 삭제
+ * 2025-02-04        jaewoo             카멜케이스로 네이밍 변환
+ * 2025-02-05        hyunjo             컴플릭트 해결
  */
 @Getter
 @Setter
@@ -36,9 +38,9 @@ import java.time.LocalDateTime;
 public class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at", updatable = true)
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 }

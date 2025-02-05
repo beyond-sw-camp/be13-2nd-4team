@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025. 2. 2.        jaewoo             최초 생성
+ * 2025. 2. 3.        jaewoo             함수명 수정
+ * 2025. 2. 4.        jaewoo             함수명 수정
  */
 
 @Tag(name = "프로젝트 API", description = "프로젝트 API")
