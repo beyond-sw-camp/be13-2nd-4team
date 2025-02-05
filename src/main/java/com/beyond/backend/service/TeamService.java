@@ -26,6 +26,5 @@ public interface TeamService {
 
     TeamResponseDto getTeam(Long id);
 
-
     void deleteTeam(Long id) throws Exception;
 }
