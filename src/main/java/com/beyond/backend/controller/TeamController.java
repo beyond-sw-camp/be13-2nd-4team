@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
+ * <p> 팀 컨트롤러
  *
  * <p>packageName    : com.beyond.backend.controller
  * <p>fileName       : TeamController
