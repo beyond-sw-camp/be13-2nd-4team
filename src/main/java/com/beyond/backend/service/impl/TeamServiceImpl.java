@@ -2,6 +2,7 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
+import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +47,16 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
         Team team = new Team();
-        team.setName(teamDto.getName());
-        team.setGoal(teamDto.getGoal());
-        team.setLeaderid(teamDto.getLeaderid());
+//        team.setName(teamDto.getName());
+//        team.setGoal(teamDto.getGoal());
+//        team.setLeaderid(teamDto.getLeaderid());
 
         Team createTeam = teamRepository.save(team);
 
         TeamResponseDto  teamResponseDto = new TeamResponseDto();
-        teamResponseDto.setName(createTeam.getName());
-        teamResponseDto.setGoal(createTeam.getGoal());
-        teamResponseDto.setLeaderid(createTeam.getLeaderid());
+//        teamResponseDto.setName(createTeam.getName());
+//        teamResponseDto.setGoal(createTeam.getGoal());
+//        teamResponseDto.setLeaderid(createTeam.getLeaderid());
 
         return teamResponseDto;
     }
@@ -69,10 +70,10 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamResponseDto updateTeam(TeamResponseDto team) {
         TeamResponseDto teamResponseDto = new TeamResponseDto();
-        teamResponseDto.setId(team.getId());
-        teamResponseDto.setName(team.getName());
-        teamResponseDto.setGoal(team.getGoal());
-        teamResponseDto.setLeaderid(team.getLeaderid());
+//        teamResponseDto.setId(team.getId());
+//        teamResponseDto.setName(team.getName());
+//        teamResponseDto.setGoal(team.getGoal());
+//        teamResponseDto.setLeaderid(team.getLeaderid());
 
         return teamResponseDto;
     }
@@ -87,9 +88,9 @@ public class TeamServiceImpl implements TeamService {
         Team team = teamRepository.findById(id).get();
 
         TeamResponseDto teamResponseDto = new TeamResponseDto();
-        teamResponseDto.setName(team.getName());
-        teamResponseDto.setGoal(team.getGoal());
-        teamResponseDto.setLeaderid(team.getLeaderid());
+//        teamResponseDto.setName(team.getName());
+//        teamResponseDto.setGoal(team.getGoal());
+//        teamResponseDto.setLeaderid(team.getLeaderid());
 
         return teamResponseDto;
     }

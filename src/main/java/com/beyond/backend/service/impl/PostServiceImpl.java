@@ -2,6 +2,7 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.PostDto;
 import com.beyond.backend.data.dto.PostResponseDto;
+import com.beyond.backend.data.entity.Post;
 import com.beyond.backend.data.repository.PostRepository;
 import com.beyond.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,12 @@ public class PostServiceImpl implements PostService {
 
         // PostResponseDto 생성
         PostResponseDto postResponseDto = new PostResponseDto();
-        postResponseDto.setId(post.getId());
-        postResponseDto.setTitle(post.getTitle());
-        postResponseDto.setContent(post.getContent());
-        postResponseDto.setUserId(post.getUserId());
-        postResponseDto.setCreatedAt(post.getCreatedAt().toString());
-        postResponseDto.setUpdatedAt(post.getUpdatedAt().toString());
+//        postResponseDto.setId(post.getId());
+//        postResponseDto.setTitle(post.getTitle());
+//        postResponseDto.setContent(post.getContent());
+//        postResponseDto.setUserId(post.getUserId());
+//        postResponseDto.setCreatedAt(post.getCreatedAt().toString());
+//        postResponseDto.setUpdatedAt(post.getUpdatedAt().toString());
 
         return postResponseDto;
     }
@@ -66,21 +67,21 @@ public class PostServiceImpl implements PostService {
     public PostResponseDto savePost(PostDto postDto) {
         // 게시글 엔티티 생성
         Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setUserId(postDto.getUserId());
+//        post.setTitle(postDto.getTitle());
+//        post.setContent(postDto.getContent());
+//        post.setUserId(postDto.getUserId());
 
         // 게시글 저장
         Post savedPost = postRepository.save(post);
 
         // PostResponseDto 생성
         PostResponseDto postResponseDto = new PostResponseDto();
-        postResponseDto.setId(savedPost.getId());
-        postResponseDto.setTitle(savedPost.getTitle());
-        postResponseDto.setContent(savedPost.getContent());
-        postResponseDto.setUserId(savedPost.getUserId());
-        postResponseDto.setCreatedAt(savedPost.getCreatedAt().toString());
-        postResponseDto.setUpdatedAt(savedPost.getUpdatedAt().toString());
+//        postResponseDto.setId(savedPost.getId());
+//        postResponseDto.setTitle(savedPost.getTitle());
+//        postResponseDto.setContent(savedPost.getContent());
+//        postResponseDto.setUserId(savedPost.getUserId());
+//        postResponseDto.setCreatedAt(savedPost.getCreatedAt().toString());
+//        postResponseDto.setUpdatedAt(savedPost.getUpdatedAt().toString());
 
         return postResponseDto;
     }
@@ -100,9 +101,9 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다. ID: " + id));
 
         // 게시글 정보 업데이트
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setUserId(postDto.getUserId());
+//        post.setTitle(postDto.getTitle());
+//        post.setContent(postDto.getContent());
+//        post.setUserId(postDto.getUserId());
 
         // 수정된 게시글 저장
         Post updatedPost = postRepository.save(post);
@@ -110,12 +111,12 @@ public class PostServiceImpl implements PostService {
         // PostResponseDto 생성 후 반환
 
         PostResponseDto postResponseDto = new PostResponseDto();
-        postResponseDto.setId(updatedPost.getId());
-        postResponseDto.setTitle(updatedPost.getTitle());
-        postResponseDto.setContent(updatedPost.getContent());
-        postResponseDto.setUserId(updatedPost.getUserId());
-        postResponseDto.setCreatedAt(updatedPost.getCreatedAt().toString());
-        postResponseDto.setUpdatedAt(updatedPost.getUpdatedAt().toString());
+//        postResponseDto.setId(updatedPost.getId());
+//        postResponseDto.setTitle(updatedPost.getTitle());
+//        postResponseDto.setContent(updatedPost.getContent());
+//        postResponseDto.setUserId(updatedPost.getUserId());
+//        postResponseDto.setCreatedAt(updatedPost.getCreatedAt().toString());
+//        postResponseDto.setUpdatedAt(updatedPost.getUpdatedAt().toString());
 
 
         return postResponseDto;
