@@ -2,6 +2,7 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
+import com.beyond.backend.data.entity.Project;
 import com.beyond.backend.data.repository.ProjectRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +50,16 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto createProject(ProjectDto projectDto) {
         Project project = new Project();
-        project.setName(projectDto.getName());
-        project.setContent(projectDto.getContent());
-        project.setUserCount(projectDto.getUserCount());
+//        project.setName(projectDto.getName());
+//        project.setContent(projectDto.getContent());
+//        project.setUserCount(projectDto.getUserCount());
 
         Project savedProject = projectRepository.save(project);
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-        projectResponseDto.setId(savedProject.getId());
-        projectResponseDto.setName(savedProject.getName());
-        projectResponseDto.setContent(savedProject.getContent());
-        projectResponseDto.setUserCount(savedProject.getUserCount());
+//        projectResponseDto.setId(savedProject.getId());
+//        projectResponseDto.setName(savedProject.getName());
+//        projectResponseDto.setContent(savedProject.getContent());
+//        projectResponseDto.setUserCount(savedProject.getUserCount());
 
         return projectResponseDto;
     }
@@ -74,10 +75,10 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(id).get();
 
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-        projectResponseDto.setId(project.getId());
-        projectResponseDto.setName(project.getName());
-        projectResponseDto.setContent(project.getContent());
-        projectResponseDto.setUserCount(project.getUserCount());
+//        projectResponseDto.setId(project.getId());
+//        projectResponseDto.setName(project.getName());
+//        projectResponseDto.setContent(project.getContent());
+//        projectResponseDto.setUserCount(project.getUserCount());
 
         return projectResponseDto;
     }
@@ -95,17 +96,17 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception {
         Project foundProject = projectRepository.findById(id).get();
-        foundProject.setName(name);
-        foundProject.setContent(content);
-        foundProject.setUserCount(userCount);
+//        foundProject.setName(name);
+//        foundProject.setContent(content);
+//        foundProject.setUserCount(userCount);
 
         Project updateProject = projectRepository.save(foundProject);
 
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-        projectResponseDto.setId(updateProject.getId());
-        projectResponseDto.setName(updateProject.getName());
-        projectResponseDto.setContent(updateProject.getContent());
-        projectResponseDto.setUserCount(updateProject.getUserCount());
+//        projectResponseDto.setId(updateProject.getId());
+//        projectResponseDto.setName(updateProject.getName());
+//        projectResponseDto.setContent(updateProject.getContent());
+//        projectResponseDto.setUserCount(updateProject.getUserCount());
 
         return projectResponseDto;
     }
