@@ -2,7 +2,6 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.PostDto;
 import com.beyond.backend.data.dto.PostResponseDto;
-import com.beyond.backend.data.entity.Post;
 import com.beyond.backend.data.repository.PostRepository;
 import com.beyond.backend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;

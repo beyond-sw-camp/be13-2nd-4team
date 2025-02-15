@@ -2,7 +2,6 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.ProductDto;
 import com.beyond.backend.data.dto.ProductResponseDto;
-import com.beyond.backend.data.entity.Product;
 import com.beyond.backend.data.repository.ProductRepository;
 import com.beyond.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

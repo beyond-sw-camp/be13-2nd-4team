@@ -1,50 +1,37 @@
 package com.beyond.backend.data.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.time.LocalDateTime;
-
-/**
- * <p>
- *
- * <p>packageName    : com.beyond.backend.data.entity
- * <p>fileName       : Team
- * <p>author         : hongjm
- * <p>date           : 2025-02-03
- * <p>description    :
- */
-/*
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2025-02-03        hongjm           최초 생성
- */
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
-@ToString
-@Table(name = "team")
-public class Team extends BaseEntity {
+@AllArgsConstructor
+@Table(name = "teams")
+public class Team {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    private Long no;
 
     @Column(nullable = false)
-    private String name;
+    private String teamName;
 
-    private String goal;
+    @Column
+    private String teamIntroduce;
 
-    private String leaderid;
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
 
+    @Enumerated(EnumType.STRING)
+    private TimePeriod timePeriod;
+
+    @ManyToOne
+    @JoinColumn(name = "user_no", nullable = false)
+    private User user;
+
+    @OneToOne(mappedBy = "team")
+    private Project project;
 }
