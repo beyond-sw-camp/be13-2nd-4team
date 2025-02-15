@@ -2,7 +2,6 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;

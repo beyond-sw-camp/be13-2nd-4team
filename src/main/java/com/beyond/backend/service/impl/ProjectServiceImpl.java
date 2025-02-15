@@ -2,7 +2,6 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
-import com.beyond.backend.data.entity.Project;
 import com.beyond.backend.data.repository.ProjectRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
