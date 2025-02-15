@@ -1,5 +1,6 @@
 package com.beyond.backend.data.repository;
 
+import com.beyond.backend.data.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
