@@ -3,6 +3,8 @@ package com.beyond.backend.service;
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
 
+import java.util.List;
+
 /**
  * <p>
  *
@@ -19,6 +21,7 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             파라미터 명 변경
  * 2025. 2. 4.        jaewoo             파라미터 명 변경
+ * 2025. 2. 16        jaewoo             getUserProjects 함수 추가
  */
 
 public interface ProjectService {
@@ -30,4 +33,6 @@ public interface ProjectService {
     ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception;
 
     void deleteProject(Long id) throws Exception;
+
+    List<ProjectResponseDto> getUserProjects(Long teamNo);
 }

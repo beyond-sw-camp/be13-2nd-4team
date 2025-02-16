@@ -3,10 +3,15 @@ package com.beyond.backend.service.impl;
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
 import com.beyond.backend.data.entity.Project;
+import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.repository.ProjectRepository;
+import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -24,12 +29,14 @@ import org.springframework.stereotype.Service;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
+ * 2025. 2. 16.       jaewoo             getUserProjects함수 작성
  */
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TeamRepository teamRepository;
 
     /**
      * ProjectRepository 생성자
@@ -37,8 +44,9 @@ public class ProjectServiceImpl implements ProjectService {
      * @see ProjectRepository
      */
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TeamRepository teamRepository) {
         this.projectRepository = projectRepository;
+        this.teamRepository = teamRepository;
     }
 
     /**
@@ -119,5 +127,24 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteProject(Long id) throws Exception {
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProjectResponseDto> getUserProjects(Long userNo) {
+        List<Team> teamsOfUser = teamRepository.findAllById(Collections.singleton(userNo));
+        List<ProjectResponseDto> projectsOfUser = null;
+
+        for (Team team : teamsOfUser) {
+            Long teamNo = team.getNo();
+            List<Project> projectsOfTeam = projectRepository.findAllById(Collections.singleton(teamNo));
+
+            projectsOfUser.add(new ProjectResponseDto());
+        }
+
+        return projectsOfUser;
+    }
+
+    public TeamRepository getTeamRepository() {
+        return teamRepository;
     }
 }
