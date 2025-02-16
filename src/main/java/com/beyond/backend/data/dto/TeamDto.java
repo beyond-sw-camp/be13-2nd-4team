@@ -1,6 +1,7 @@
 package com.beyond.backend.data.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,25 +14,23 @@ import lombok.ToString;
  * <p>fileName       : TeamDto
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    :
+ * <p>description    : 팀 Dto
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
+ * 2025-02-16        hongjm           Entity에 맞춰 수정
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
 public class TeamDto {
 
-    private String name;
+    private String teamName;
 
-    private String goal;
+    private String teamIntroduce;
 
-    private String leaderid;
+    private String projectStatus;
 
 }

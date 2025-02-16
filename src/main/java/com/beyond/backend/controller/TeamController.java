@@ -2,6 +2,7 @@ package com.beyond.backend.controller;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
+import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p> 팀 컨트롤러
  *
@@ -23,13 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>fileName       : TeamController
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    :  팀 컨트롤러
+ * <p>description    : 팀 컨트롤러
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
+ * 2025-02-16        hongjm           팀 조회 기능 추가
  */
 @Tag(name = "팀 API", description = "팀 API")
 @RestController
@@ -60,11 +65,17 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamDto);
     }
 
-    @Operation(summary = "팀 조회 메서드", description = "팀 조회 메서드 입니다.")
+    @Operation(summary = "팀 조회 메서드", description = "유저 번호로 해당 유저의 모든 팀을 조회하는 메서드 입니다.")
     @GetMapping()
-    public ResponseEntity<TeamResponseDto> getTeam(Long teamId) {
-        TeamResponseDto teamResponseDto = teamService.getTeam(teamId);
-        return ResponseEntity.status(HttpStatus.OK).body(teamResponseDto);
+    public ResponseEntity<List<TeamResponseDto>> getTeam(Long userNo) {
+        List<Team> teamsByUserNo = teamService.findTeamsByUserNo(userNo);
+
+        List<TeamResponseDto> teamResponseDtos = teamsByUserNo.stream()
+                .map(team -> TeamResponseDto.builder()
+                        .teamName(team.getTeamName())
+                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(teamResponseDtos);
     }
 
     @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")

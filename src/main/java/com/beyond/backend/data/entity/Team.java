@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -28,9 +31,8 @@ public class Team {
     @Enumerated(EnumType.STRING)
     private TimePeriod timePeriod;
 
-    @ManyToOne
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @OneToMany(mappedBy = "team")
+    private List<TeamUser> teamUsers = new ArrayList<>();
 
     @OneToOne(mappedBy = "team")
     private Project project;

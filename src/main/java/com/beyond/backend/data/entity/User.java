@@ -68,8 +68,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
+    // [홍재민] 팀 구성과 연결
     @OneToMany(mappedBy = "user")
-    private List<Team> teams = new ArrayList<>();
+    private List<TeamUser> teamUsers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
