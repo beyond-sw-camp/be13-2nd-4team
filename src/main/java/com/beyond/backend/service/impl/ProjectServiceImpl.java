@@ -3,14 +3,11 @@ package com.beyond.backend.service.impl;
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
 import com.beyond.backend.data.entity.Project;
-import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.repository.ProjectRepository;
-import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,14 +26,14 @@ import java.util.List;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
- * 2025. 2. 16.       jaewoo             getUserProjects함수 작성
+ * 2025. 2. 16.       jaewoo             getUserProjects 함수 작성
+ * 2025. 2. 17.       jaewoo             getProjectsByUserId 함수에 teamNo가 매개변수가 되게 작성
  */
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final TeamRepository teamRepository;
 
     /**
      * ProjectRepository 생성자
@@ -44,9 +41,8 @@ public class ProjectServiceImpl implements ProjectService {
      * @see ProjectRepository
      */
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, TeamRepository teamRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
-        this.teamRepository = teamRepository;
     }
 
     /**
@@ -72,24 +68,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectResponseDto;
     }
 
-    /**
-     * 프로젝트 조회
-     * @param id 프로젝트 ID
-     * @return ProjectResponseDto projectResponseDto
-     * @see ProjectResponseDto
-     */
-    @Override
-    public ProjectResponseDto getProject(Long id) {
-        Project project = projectRepository.findById(id).get();
-
-        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-//        projectResponseDto.setId(project.getId());
-//        projectResponseDto.setName(project.getName());
-//        projectResponseDto.setContent(project.getContent());
-//        projectResponseDto.setUserCount(project.getUserCount());
-
-        return projectResponseDto;
-    }
 
     /**
      * 프로젝트 업데이트
@@ -129,22 +107,34 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.deleteById(id);
     }
 
+    /**
+     * 프로젝트 조회
+     * @param teamNo
+     * @return List(ProjectResponseDto)
+     */
     @Override
-    public List<ProjectResponseDto> getUserProjects(Long userNo) {
-        List<Team> teamsOfUser = teamRepository.findAllById(Collections.singleton(userNo));
-        List<ProjectResponseDto> projectsOfUser = null;
+    public List<ProjectResponseDto> getProjectsByUserId(Long teamNo) {
+        List<ProjectResponseDto> projects = null;
 
-        for (Team team : teamsOfUser) {
-            Long teamNo = team.getNo();
-            List<Project> projectsOfTeam = projectRepository.findAllById(Collections.singleton(teamNo));
+        List<Project> projectList = projectRepository.findByTeamNo(teamNo);
 
-            projectsOfUser.add(new ProjectResponseDto());
+        for (Project project : projectList) {
+            ProjectResponseDto projectResponseDto = new ProjectResponseDto();
+
+            projectResponseDto.setId(project.getNo());
+            projectResponseDto.setName(project.getName());
+            projectResponseDto.setProjectPurpose(project.getProjectPurpose());
+            projectResponseDto.setProjectSubject(project.getProjectSubject());
+            projectResponseDto.setProjectStatus(project.getProjectStatus());
+            projectResponseDto.setProjectType(project.getProjectType());
+            projectResponseDto.setFeedBacks(project.getFeedBacks());
+            projectResponseDto.setProjectTeches(project.getProjectTeches());
+            projectResponseDto.setTeam(project.getTeam());
+            projectResponseDto.setTimePeriod(project.getTimePeriod());
+
+            projects.add(projectResponseDto);
         }
 
-        return projectsOfUser;
-    }
-
-    public TeamRepository getTeamRepository() {
-        return teamRepository;
+        return projects;
     }
 }

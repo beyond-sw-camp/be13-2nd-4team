@@ -22,17 +22,16 @@ import java.util.List;
  * 2025. 2. 3.        jaewoo             파라미터 명 변경
  * 2025. 2. 4.        jaewoo             파라미터 명 변경
  * 2025. 2. 16        jaewoo             getUserProjects 함수 추가
+ * 2025. 2. 17        jaewoo             getProjectsByUserId 함수명 변경
  */
 
 public interface ProjectService {
 
     ProjectResponseDto createProject(ProjectDto projectDto);
 
-    ProjectResponseDto getProject(Long id);
-
     ProjectResponseDto updateProject(Long id, String name, String content, int userCount) throws Exception;
 
     void deleteProject(Long id) throws Exception;
 
-    List<ProjectResponseDto> getUserProjects(Long teamNo);
+    List<ProjectResponseDto> getProjectsByUserId(Long teamNo);
 }

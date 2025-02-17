@@ -1,6 +1,22 @@
 package com.beyond.backend.data.dto;
 
+import com.beyond.backend.data.entity.FeedBack;
+import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.ProjectTech;
+import com.beyond.backend.data.entity.ProjectType;
+import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.TimePeriod;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +34,7 @@ import lombok.*;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             변수명 수정
  * 2025. 2. 4.        jaewoo             변수명 수정
+ * 2025. 2. 17.       jaewoo             Entity에 맞게 수정
  */
 
 @Getter
@@ -32,7 +49,19 @@ public class ProjectResponseDto {
 
     private String name;
 
-    private String content;
+    private String projectPurpose;
 
-    private int userCount;
+    private String projectSubject;
+
+    private ProjectStatus projectStatus;
+
+    private ProjectType projectType;
+
+    private List<FeedBack> feedBacks = new ArrayList<>();
+
+    private List<ProjectTech> projectTeches;
+
+    private Team team;
+
+    private TimePeriod timePeriod;
 }
