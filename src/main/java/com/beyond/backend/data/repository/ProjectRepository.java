@@ -1,9 +1,9 @@
 package com.beyond.backend.data.repository;
 
 import com.beyond.backend.data.entity.Project;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 /**
  * <p>
@@ -21,8 +21,9 @@ import java.util.List;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 2.        jaewoo             오타 수정
  * 2025. 2. 17.       jaewoo             findByTeamNo 함수 생성
+ * 2025. 2. 18.       jaewoo             Pageable 추가
  */
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> findByTeamNo(Long teamNo);
+    Page<Project> findByTeamNo(Long teamNo, Pageable pageable);
 }

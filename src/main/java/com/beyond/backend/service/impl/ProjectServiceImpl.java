@@ -6,10 +6,9 @@ import com.beyond.backend.data.entity.Project;
 import com.beyond.backend.data.repository.ProjectRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -31,6 +30,7 @@ import java.util.List;
  * 2025. 2. 17.       jaewoo             getProjectsByUserId 함수에 teamNo가 매개변수가 되게 작성
  * 2025. 2. 17.       jaewoo             getProjectsByTeamNo 함수명 변경
  * 2025. 2. 18.       jaewoo             teamNo를 알고 있는 상황이기 때문에 불필요한 코드 제거
+ * 2025. 2. 18.       jaewoo             페이징 처리 코드 작성
  */
 
 @Service
@@ -112,32 +112,29 @@ public class ProjectServiceImpl implements ProjectService {
 
     /**
      * 프로젝트 조회
-     * @param teamNo
-     * @return List(ProjectResponseDto)
+     * @param teamNo 팀 id
+     * @param pageable 페이지
+     * @return Page ProgectResponseDto
      */
     @Override
-    public List<ProjectResponseDto> getProjectsByTeamNo(Long teamNo) {
-        List<ProjectResponseDto> projects = new ArrayList<>();
+    public Page<ProjectResponseDto> getProjectsByTeamNo(Long teamNo, Pageable pageable) {
+        Page<Project> projectPage = projectRepository.findByTeamNo(teamNo, pageable);
 
-        List<Project> projectList = projectRepository.findByTeamNo(teamNo);
+        return projectPage.map(project -> {
+            ProjectResponseDto dto = new ProjectResponseDto();
 
-        for (Project project : projectList) {
-            ProjectResponseDto projectResponseDto = new ProjectResponseDto();
+            dto.setId(project.getNo());
+            dto.setName(project.getName());
+            dto.setProjectPurpose(project.getProjectPurpose());
+            dto.setProjectSubject(project.getProjectSubject());
+            dto.setProjectStatus(project.getProjectStatus());
+            dto.setProjectType(project.getProjectType());
+            dto.setFeedBacks(project.getFeedBacks());
+            dto.setProjectTeches(project.getProjectTeches());
+            dto.setTeamNo(teamNo);
+            dto.setTimePeriod(project.getTimePeriod());
 
-            projectResponseDto.setId(project.getNo());
-            projectResponseDto.setName(project.getName());
-            projectResponseDto.setProjectPurpose(project.getProjectPurpose());
-            projectResponseDto.setProjectSubject(project.getProjectSubject());
-            projectResponseDto.setProjectStatus(project.getProjectStatus());
-            projectResponseDto.setProjectType(project.getProjectType());
-            projectResponseDto.setFeedBacks(project.getFeedBacks());
-            projectResponseDto.setProjectTeches(project.getProjectTeches());
-            projectResponseDto.setTeamNo(teamNo);
-            projectResponseDto.setTimePeriod(project.getTimePeriod());
-
-            projects.add(projectResponseDto);
-        }
-
-        return projects;
+            return dto;
+        });
     }
 }

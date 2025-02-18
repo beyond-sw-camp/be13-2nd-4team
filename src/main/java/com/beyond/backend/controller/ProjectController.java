@@ -5,6 +5,8 @@ import com.beyond.backend.data.dto.ProjectResponseDto;
 import com.beyond.backend.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ import java.util.List;
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
  * 2025. 2. 17.       jaewoo             프로젝트 조회 로직 수정
+ * 2025. 2. 18.       jaewoo             프로젝트 조회 페이징 처리
  */
 
 @Tag(name = "프로젝트 API", description = "프로젝트 API")
@@ -59,10 +62,10 @@ public class ProjectController {
      */
     @Operation(summary = "프로젝트 조회 메서드", description = "프로젝트 조회 메서드입니다.")
     @GetMapping("/{teamNo}")
-    public ResponseEntity<List<ProjectResponseDto>> getProjectsByTeamNo(@PathVariable Long teamNo) {
-        List<ProjectResponseDto> projects = projectService.getProjectsByTeamNo(teamNo);
+    public ResponseEntity<List<ProjectResponseDto>> getProjectsByTeamNo(@PathVariable Long teamNo, Pageable pageable) {
+        Page<ProjectResponseDto> projects = projectService.getProjectsByTeamNo(teamNo, pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(projects);
+        return ResponseEntity.status(HttpStatus.OK).body(projects.getContent());
     }
 
 

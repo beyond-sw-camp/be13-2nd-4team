@@ -2,6 +2,8 @@ package com.beyond.backend.service;
 
 import com.beyond.backend.data.dto.ProjectDto;
 import com.beyond.backend.data.dto.ProjectResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
  * 2025. 2. 16        jaewoo             getUserProjects 함수 추가
  * 2025. 2. 17        jaewoo             getProjectsByUserId 함수명 변경
  * 2025. 2. 17        jaewoo             getProjectsByTeamNo 함수명 변경
+ * 2025. 2. 18        jaewoo             Pageable 추가
  */
 
 public interface ProjectService {
@@ -34,5 +37,5 @@ public interface ProjectService {
 
     void deleteProject(Long id) throws Exception;
 
-    List<ProjectResponseDto> getProjectsByTeamNo(Long teamNo);
+    Page<ProjectResponseDto> getProjectsByTeamNo(Long teamNo, Pageable pageable);
 }
