@@ -24,15 +24,6 @@ public class TeamUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
-    @Column(nullable = false)
-    private char status; // F (EnumType 고려)
-
-    @Column
-    private String role;
-
-    @Embedded
-    private TimePeriod timePeriod;
-
     @ManyToOne
     @JoinColumn(name = "user_no", nullable = false)
     private User user;
@@ -40,5 +31,11 @@ public class TeamUser {
     @ManyToOne
     @JoinColumn(name = "team_no", nullable = false)
     private Team team;
+
+    @Column(nullable = false)
+    private boolean status; // 승인여부
+
+    @Column
+    private String role;
 
 }

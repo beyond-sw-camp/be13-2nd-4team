@@ -2,9 +2,7 @@ package com.beyond.backend.service;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.entity.Team;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.beyond.backend.data.dto.TeamSearchDto;
 
 import java.util.List;
 
@@ -30,8 +28,9 @@ public interface TeamService {
 
     TeamResponseDto updateTeam(TeamResponseDto team);
 
-    @Query("SELECT tu.team.no FROM TeamUser tu WHERE tu.user.no = :userNo")
-    List<Team> findTeamsByUserNo(@Param("userNo")Long userNo);
+    List<TeamSearchDto> filterUserTeams(Long userNo, String teamName, String teamIntroduce, String projectStatus);
 
     void deleteTeam(Long id) throws Exception;
+
+
 }

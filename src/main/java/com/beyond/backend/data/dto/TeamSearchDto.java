@@ -1,5 +1,13 @@
 package com.beyond.backend.data.dto;
 
+import com.beyond.backend.data.entity.ProjectStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 /**
  * <p>
  *
@@ -14,17 +22,19 @@ package com.beyond.backend.data.dto;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-16        hongjm           최초 생성
+ * 2025-02-18        hongjm           간소화
  */
 
-public class TeamUserDto {
+@Data
+@Builder
+public class TeamSearchDto {
 
-    private Long id;
+    private String teamName;
 
-    private char status;
+    private String teamIntroduce;
 
-    private String role;
+    private ProjectStatus projectStatus;
 
-    private Long userNo;
+    private LocalDateTime createdAt;
 
-    private Long teamNo;
 }

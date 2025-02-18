@@ -2,15 +2,13 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
+import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.Team;
-import com.beyond.backend.data.entity.TeamUser;
 import com.beyond.backend.data.repository.TeamRepository;
-import com.beyond.backend.data.repository.TeamUserRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,24 +25,21 @@ import java.util.List;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
- * 2025-02-16        hongjm           팀 조회 기능 추가 및 정리
+ * 2025-02-18        hongjm           팀 조회 기능 추가 및 정리
  */
 @Service
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
-    private final TeamUserRepository teamUserRepository;
 
     /**
      * TeamServiceImpl 생성자
      * @param teamRepository 팀 Repository
      * @see TeamRepository
-     * @see TeamUserRepository
      */
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, TeamUserRepository teamUserRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
-        this.teamUserRepository = teamUserRepository;
     }
 
     /**
@@ -89,19 +84,20 @@ public class TeamServiceImpl implements TeamService {
 
     /**
      * 팀 정보 조회
+     *
      * @param userNo 유저 번호
      * @return TeamResponseDto teamResponseDto
      */
     @Override
-    public List<Team> findTeamsByUserNo(Long userNo) {
-        List<TeamUser> teamUser = teamUserRepository.findByUserNo(userNo);
-        List<Team> teams = new ArrayList<>();
-        
-        // 해당되는 모든 팀을 가져와서 팀 리스트에 넣어 반환
-        for(TeamUser team : teamUser) {
-            teams.add(team.getTeam());
-        }
-        return teams;
+    public List<TeamSearchDto> filterUserTeams(Long userNo, String teamName, String teamIntroduce, String projectStatus){
+        List<TeamSearchDto> teams = teamRepository.findUserTeams(userNo);
+
+        List<TeamSearchDto> filteredTeams = teams.stream()
+                .filter(team -> teamName == null || team.getTeamName().contains(teamName))
+                .filter(team -> teamIntroduce == null || team.getTeamIntroduce().contains(teamIntroduce))
+                .filter(team -> projectStatus == null || team.getProjectStatus().equals(projectStatus))
+                .toList();
+        return filteredTeams;
     }
 
     /**
