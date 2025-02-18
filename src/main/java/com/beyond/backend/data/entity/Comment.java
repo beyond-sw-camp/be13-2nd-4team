@@ -14,25 +14,23 @@ import lombok.ToString;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_no")
-    private Long no;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ 전략 추가 (권장)
+    private Long id;
 
     @Column(nullable = false)
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @Embedded
     private TimePeriod period;
 
-    //FK
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no", nullable = false)
+    @JoinColumn(name = "user", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_no", nullable = false)
+    @JoinColumn(name = "post", nullable = false)
     private Post post;
 }
