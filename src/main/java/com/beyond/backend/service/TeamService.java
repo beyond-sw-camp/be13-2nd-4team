@@ -3,6 +3,7 @@ package com.beyond.backend.service;
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
  * 2025-02-15        hongjm           팀 검색 기능 추가
+ * 2025-02-18        hongjm           팀 검색 페이징 기능 추가 및 보완
  */
 
 public interface TeamService {
@@ -28,7 +30,8 @@ public interface TeamService {
 
     TeamResponseDto updateTeam(TeamResponseDto team);
 
-    List<TeamSearchDto> filterUserTeams(Long userNo, String teamName, String teamIntroduce, String projectStatus);
+    Page<TeamSearchDto> filterUserTeams(
+            Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);
 
     void deleteTeam(Long id) throws Exception;
 

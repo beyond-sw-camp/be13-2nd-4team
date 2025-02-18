@@ -70,15 +70,30 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamDto);
     }
 
+    /**
+     * userNo로 팀 정보를 조회하는 메서드
+     *
+     * @param userNo 유저 번호
+     * @param teamName (검색용) 팀이름
+     * @param teamIntroduce (검색용) 팀 설명
+     * @param projectStatus (검색용) 팀 상태
+     * @param page 최소 출력 값
+     * @param size 최대 출력 값
+     * @return teamSearch 검색 결과값 반환
+     */
     @Operation(summary = "팀 조회 메서드", description = "유저 번호로 해당 유저의 모든 팀을 조회하는 메서드 입니다.")
     @GetMapping()
-    public ResponseEntity<List<TeamSearchDto>> getUserTeams(
+    public ResponseEntity<Page<TeamSearchDto>> getUserTeams(
             @RequestParam Long userNo,
             @RequestParam(required = false)  String teamName,
             @RequestParam(required = false)  String teamIntroduce,
-            @RequestParam(required = false)  String projectStatus){
+            @RequestParam(required = false)  String projectStatus,
+            @RequestParam int page,
+            @RequestParam int size){
 
-        return ResponseEntity.status(HttpStatus.OK).body(teamService.filterUserTeams(userNo, teamName, teamIntroduce, projectStatus));
+        Page<TeamSearchDto> teamSearch = teamService.filterUserTeams(userNo, teamName, teamIntroduce, projectStatus, page, size);
+
+        return ResponseEntity.status(HttpStatus.OK).body(teamSearch);
     }
 
     @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")

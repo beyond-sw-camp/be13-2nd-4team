@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * <p>fileName       : TeamUserDto
  * <p>author         : hongjm
  * <p>date           : 2025-02-16
- * <p>description    : 유저와 팀을 잇는 팀구성 Dto
+ * <p>description    : userNo로 팀을 반환
  */
 /*
  * ===========================================================

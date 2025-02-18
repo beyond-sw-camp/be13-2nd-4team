@@ -2,6 +2,8 @@ package com.beyond.backend.data.repository;
 
 import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.Team;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,7 +24,7 @@ import java.util.List;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
- *
+ * 2025-02-18        hongjm           userNo로 팀 검색 쿼리 추가
  */
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
@@ -32,5 +34,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
             "JOIN TeamUser tu ON u.no = tu.user.no " +
             "JOIN Team t ON tu.team.no = t.no " +
             "WHERE u.no = :userNo")
-    List<TeamSearchDto> findUserTeams(@Param("userNo") Long userNo);
+    Page<TeamSearchDto> findUserTeams(@Param("userNo") Long userNo, Pageable pageable);
 }

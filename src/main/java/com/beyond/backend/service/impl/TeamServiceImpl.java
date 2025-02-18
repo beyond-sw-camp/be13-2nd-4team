@@ -7,6 +7,10 @@ import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,21 +87,28 @@ public class TeamServiceImpl implements TeamService {
     }
 
     /**
-     * 팀 정보 조회
+     * userNo로 팀 정보 조회 서비스
      *
      * @param userNo 유저 번호
-     * @return TeamResponseDto teamResponseDto
+     * @param teamName (필터) 팀이름
+     * @param teamIntroduce (필터) 팀 설명
+     * @param projectStatus (필터) 팀 상태
+     * @param page 최소 출력 값
+     * @param size 최대 출력 값
+     * @return PageImpl 필터링 결과값 반환
      */
     @Override
-    public List<TeamSearchDto> filterUserTeams(Long userNo, String teamName, String teamIntroduce, String projectStatus){
-        List<TeamSearchDto> teams = teamRepository.findUserTeams(userNo);
+    public Page<TeamSearchDto> filterUserTeams(
+            Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TeamSearchDto> teams = teamRepository.findUserTeams(userNo, pageable);
 
         List<TeamSearchDto> filteredTeams = teams.stream()
                 .filter(team -> teamName == null || team.getTeamName().contains(teamName))
                 .filter(team -> teamIntroduce == null || team.getTeamIntroduce().contains(teamIntroduce))
                 .filter(team -> projectStatus == null || team.getProjectStatus().equals(projectStatus))
                 .toList();
-        return filteredTeams;
+        return new PageImpl<>(filteredTeams, pageable, teams.getTotalElements());
     }
 
     /**
