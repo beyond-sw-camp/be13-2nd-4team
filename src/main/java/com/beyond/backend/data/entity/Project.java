@@ -37,7 +37,18 @@ public class Project extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+
+
     private String content;
 
-    private int userCount;
+
+    @Embedded
+    private TimePeriod timePeriod;
+
+    public void setUserCount(int userCount) {
+    }
+
+    public int getUserCount() {
+        return 0;
+    }
 }

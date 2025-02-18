@@ -36,8 +36,23 @@ dependencies {
 
     // Swagger - Springdoc
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
+
+    //test 롬복 사용
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    //Querydsl 추가
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    //끝
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+//여기도 추가
+clean {
+    delete file('src/main/generated')
 }
