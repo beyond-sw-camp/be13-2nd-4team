@@ -1,10 +1,13 @@
 package com.beyond.backend.data.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,13 +19,12 @@ public class Badge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long no;
 
     @Column(nullable = false, length = 255)
     private String description; // 뱃지 설명
 
     @OneToMany(mappedBy = "badge", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserBadge> userBadges = new HashSet<>();
-
+    private List<UserBadge> userBadges = new ArrayList<>();
 
 }

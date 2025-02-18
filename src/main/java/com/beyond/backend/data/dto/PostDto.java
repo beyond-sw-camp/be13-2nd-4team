@@ -3,39 +3,33 @@ package com.beyond.backend.data.dto;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * <p>상품 응답 Dto
+ * <p>
  *
  * <p>packageName    : com.beyond.backend.data.dto
- * <p>fileName       : ProductResponseDto
- * <p>author         : hjsong
- * <p>date           : 2025-01-18
- * <p>description    : 상품 응답 Dto
+ * <p>fileName       : PostDto
+ * <p>author         : hyunjo
+ * <p>date           : 25. 2. 2.
+ * <p>description    :
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-01-18        hjsong             최초 생성
- * 2025-01-20        hjsong             파일명 이니셜(_shj) 삭제
+ * 25. 2. 2.        hyunjo             최초 생성
  */
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponseDto {
+public class PostDto {
 
-    private Long number;
 
-    private String name;
-
-    private int price;
-
-    private int stock;
+    private String title;
+    private String content;
+    private String userId;
 }

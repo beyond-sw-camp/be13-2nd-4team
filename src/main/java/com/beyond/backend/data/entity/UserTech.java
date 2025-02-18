@@ -4,35 +4,25 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@ToString
-public class Comment {
+@Table(name = "user_tech", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_no", "tech_no"})
+})
+public class UserTech {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_no")
     private Long no;
 
-    @Column(nullable = false)
-    private String content;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    @Embedded
-    private TimePeriod period;
-
-    //FK
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_no", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_no", nullable = false)
-    private Post post;
+    @JoinColumn(name = "tech_no", nullable = false)
+    private Tech tech;
 }
