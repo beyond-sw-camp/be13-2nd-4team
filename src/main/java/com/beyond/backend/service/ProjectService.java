@@ -23,6 +23,7 @@ import java.util.List;
  * 2025. 2. 4.        jaewoo             파라미터 명 변경
  * 2025. 2. 16        jaewoo             getUserProjects 함수 추가
  * 2025. 2. 17        jaewoo             getProjectsByUserId 함수명 변경
+ * 2025. 2. 17        jaewoo             getProjectsByTeamNo 함수명 변경
  */
 
 public interface ProjectService {
@@ -33,5 +34,5 @@ public interface ProjectService {
 
     void deleteProject(Long id) throws Exception;
 
-    List<ProjectResponseDto> getProjectsByUserId(Long teamNo);
+    List<ProjectResponseDto> getProjectsByTeamNo(Long teamNo);
 }

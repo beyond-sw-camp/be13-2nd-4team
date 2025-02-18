@@ -8,6 +8,7 @@ import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ import java.util.List;
  * 2025. 2. 4.        jaewoo             함수명 수정
  * 2025. 2. 16.       jaewoo             getUserProjects 함수 작성
  * 2025. 2. 17.       jaewoo             getProjectsByUserId 함수에 teamNo가 매개변수가 되게 작성
+ * 2025. 2. 17.       jaewoo             getProjectsByTeamNo 함수명 변경
  */
 
 @Service
@@ -113,8 +115,8 @@ public class ProjectServiceImpl implements ProjectService {
      * @return List(ProjectResponseDto)
      */
     @Override
-    public List<ProjectResponseDto> getProjectsByUserId(Long teamNo) {
-        List<ProjectResponseDto> projects = null;
+    public List<ProjectResponseDto> getProjectsByTeamNo(Long teamNo) {
+        List<ProjectResponseDto> projects = new ArrayList<>();
 
         List<Project> projectList = projectRepository.findByTeamNo(teamNo);
 
@@ -129,7 +131,7 @@ public class ProjectServiceImpl implements ProjectService {
             projectResponseDto.setProjectType(project.getProjectType());
             projectResponseDto.setFeedBacks(project.getFeedBacks());
             projectResponseDto.setProjectTeches(project.getProjectTeches());
-            projectResponseDto.setTeam(project.getTeam());
+            projectResponseDto.setTeamNo(project.getTeam().getNo());
             projectResponseDto.setTimePeriod(project.getTimePeriod());
 
             projects.add(projectResponseDto);

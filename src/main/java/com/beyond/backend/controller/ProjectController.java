@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>프로젝트 API
  *
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
+ * 2025. 2. 17.       jaewoo             프로젝트 조회 로직 수정
  */
 
 @Tag(name = "프로젝트 API", description = "프로젝트 API")
@@ -51,16 +54,17 @@ public class ProjectController {
     /**
      * Get product response entity.
      *
-     * @param id the number
+     * @param teamNo 팀 번호
      * @return the response entity
      */
     @Operation(summary = "프로젝트 조회 메서드", description = "프로젝트 조회 메서드입니다.")
-    @GetMapping()
-    public ResponseEntity<ProjectResponseDto> getProject(Long id){
-        ProjectResponseDto projectResponseDto = projectService.getProject(id);
+    @GetMapping("/{teamNo}")
+    public ResponseEntity<List<ProjectResponseDto>> getProjectsByTeamNo(@PathVariable Long teamNo) {
+        List<ProjectResponseDto> projects = projectService.getProjectsByTeamNo(teamNo);
 
-        return ResponseEntity.status(HttpStatus.OK).body(projectResponseDto);
+        return ResponseEntity.status(HttpStatus.OK).body(projects);
     }
+
 
     @Operation(summary = "프로젝트 등록 메서드", description = "프로젝트 등록 메서드입니다.")
     @PostMapping()

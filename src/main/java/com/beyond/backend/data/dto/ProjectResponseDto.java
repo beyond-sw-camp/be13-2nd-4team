@@ -35,6 +35,7 @@ import java.util.List;
  * 2025. 2. 3.        jaewoo             변수명 수정
  * 2025. 2. 4.        jaewoo             변수명 수정
  * 2025. 2. 17.       jaewoo             Entity에 맞게 수정
+ * 2025. 2. 18.       jaewoo             순환참조 해결을 위해서 team이 아닌 teamNo를 받아오게끔 작성
  */
 
 @Getter
@@ -61,7 +62,7 @@ public class ProjectResponseDto {
 
     private List<ProjectTech> projectTeches;
 
-    private Team team;
+    private Long teamNo;
 
     private TimePeriod timePeriod;
 }
