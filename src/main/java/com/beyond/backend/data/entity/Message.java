@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long no;
+    private Long id;
 
     @Column(nullable = false)
     private LocalDateTime sentAt;
@@ -26,10 +27,10 @@ public class Message {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_no", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     private User sender; //직관적 네이밍
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_no", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver; //직관적 네이밍
 }
