@@ -68,9 +68,9 @@ public class User {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> receivedMessages = new HashSet<>();
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> comments = new HashSet<>();
+    // @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Post> posts = new HashSet<>();
+    // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private Set<Post> posts = new HashSet<>();
 }
