@@ -60,10 +60,15 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamResponseDto);
     }
 
+    /**
+     * 팀 수정 메소드
+     * 
+     * @param teamDto 팀 정보
+     * @return teamDto ok
+     */
     @Operation(summary = "팀 수정 메서드", description = "팀 수정 메서드 입니다.")
     @PutMapping()
-    public ResponseEntity<TeamResponseDto> updateTeam(
-            @RequestBody TeamResponseDto teamDto) throws Exception {
+    public ResponseEntity<TeamDto> updateTeam(@RequestBody TeamDto teamDto) {
 
         teamService.updateTeam(teamDto);
 

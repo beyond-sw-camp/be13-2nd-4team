@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p>
+ * <p> 팀 서비스 상세
  * 
  * <p>packageName    : com.beyond.backend.service.impl
  * <p>fileName       : TeamServiceImpl
@@ -55,9 +55,9 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
         Team team = new Team();
-//        team.setName(teamDto.getName());
-//        team.setGoal(teamDto.getGoal());
-//        team.setLeaderid(teamDto.getLeaderid());
+       // team.setName(teamDto.getName());
+       // team.setGoal(teamDto.getGoal());
+       // team.setLeaderid(teamDto.getLeaderid());
 
         Team createTeam = teamRepository.save(team);
 
@@ -73,17 +73,15 @@ public class TeamServiceImpl implements TeamService {
      * 팀 정보 수정
      *
      * @param team 팀 정보
-     * @return TeamResponseDto teamResponseDto
+     * @return TeamDto TeamDto
      */
     @Override
-    public TeamResponseDto updateTeam(TeamResponseDto team) {
-        TeamResponseDto teamResponseDto = new TeamResponseDto();
-//        teamResponseDto.setId(team.getId());
-//        teamResponseDto.setName(team.getName());
-//        teamResponseDto.setGoal(team.getGoal());
-//        teamResponseDto.setLeaderid(team.getLeaderid());
-
-        return teamResponseDto;
+    public TeamDto updateTeam(TeamDto team) {
+        return TeamDto.builder()
+                .teamName(team.getTeamName())
+                .teamIntroduce(team.getTeamIntroduce())
+                .projectStatus(team.getProjectStatus())
+                .build();
     }
 
     /**

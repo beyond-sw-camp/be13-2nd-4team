@@ -8,13 +8,13 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * <p>
+ * <p> 팀 서비스
  *
  * <p>packageName    : com.beyond.backend.service
  * <p>fileName       : TeamService
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    :
+ * <p>description    : 팀 서비스
  */
 /*
  * ===========================================================
@@ -28,7 +28,7 @@ import java.util.List;
 public interface TeamService {
     TeamResponseDto createTeam(TeamDto team);
 
-    TeamResponseDto updateTeam(TeamResponseDto team);
+    TeamDto updateTeam(TeamDto team);
 
     Page<TeamSearchDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);

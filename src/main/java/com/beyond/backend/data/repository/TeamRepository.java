@@ -8,16 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 /**
- * <p>
+ * <p> 팀 리포지토리
  * 
  * <p>packageName    : com.beyond.backend.data.repository
  * <p>fileName       : TeamRepository
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    : 
+ * <p>description    : 팀 관련 리포지토리
  */
  /*
  * ===========================================================

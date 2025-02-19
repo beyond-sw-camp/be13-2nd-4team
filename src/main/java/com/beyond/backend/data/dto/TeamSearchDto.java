@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * <p>
+ * <p> 팀 검색 Dto
  *
  * <p>packageName    : com.beyond.backend.data.dto
  * <p>fileName       : TeamUserDto
