@@ -1,12 +1,10 @@
 package com.beyond.backend.data.dto;
 
+import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * <p>
@@ -35,6 +33,5 @@ public class TeamDto {
 
     private String teamIntroduce;
 
-    private String projectStatus;
-
+    private ProjectStatus projectStatus;
 }

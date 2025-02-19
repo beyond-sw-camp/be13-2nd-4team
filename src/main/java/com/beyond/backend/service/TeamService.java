@@ -5,8 +5,6 @@ import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 /**
  * <p> 팀 서비스
  *
@@ -26,7 +24,7 @@ import java.util.List;
  */
 
 public interface TeamService {
-    TeamResponseDto createTeam(TeamDto team);
+    TeamResponseDto createTeam(TeamDto teamDto);
 
     TeamDto updateTeam(TeamDto team);
 

@@ -3,13 +3,11 @@ package com.beyond.backend.controller;
 import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
-import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.ProjectStatus;
 import com.beyond.backend.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p> 팀 컨트롤러
@@ -40,11 +35,13 @@ import java.util.stream.Collectors;
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
  * 2025-02-18        hongjm           팀 조회 기능 추가
+ * 2025-02-19        hongjm           팀 CRUD 수정
  */
 @Tag(name = "팀 API", description = "팀 API")
 @RestController
 @RequestMapping("/team")
 public class TeamController {
+
     private final TeamService teamService;
 
     public TeamController(TeamService teamService) {
@@ -53,7 +50,14 @@ public class TeamController {
 
     @Operation(summary = "팀 생성 메서드", description = "팀 생성 메서드입니다.")
     @PostMapping()
-    public ResponseEntity<TeamResponseDto> createTeam(@RequestBody TeamDto teamDto) {
+    // public ResponseEntity<TeamResponseDto> createTeam(@RequestBody TeamDto team) {
+    public ResponseEntity<TeamResponseDto> createTeam(
+            @RequestParam Long userNo,
+            @RequestParam String teamName,
+            @RequestParam(required = false) String teamIntroduce,
+            @RequestParam ProjectStatus projectStatus){
+
+        TeamDto teamDto = new TeamDto(userNo, teamName, teamIntroduce, projectStatus);
 
         TeamResponseDto teamResponseDto = teamService.createTeam(teamDto);
 
@@ -62,7 +66,7 @@ public class TeamController {
 
     /**
      * 팀 수정 메소드
-     * 
+     *
      * @param teamDto 팀 정보
      * @return teamDto ok
      */
@@ -107,5 +111,4 @@ public class TeamController {
         teamService.deleteTeam(teamId);
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }
-
 }

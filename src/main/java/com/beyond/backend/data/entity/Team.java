@@ -2,6 +2,7 @@ package com.beyond.backend.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "teams")
@@ -36,4 +38,5 @@ public class Team {
 
     @OneToOne(mappedBy = "team")
     private Project project;
+
 }

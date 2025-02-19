@@ -4,7 +4,12 @@ import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.TeamUser;
+import com.beyond.backend.data.entity.TimePeriod;
+import com.beyond.backend.data.entity.User;
 import com.beyond.backend.data.repository.TeamRepository;
+import com.beyond.backend.data.repository.TeamUserRepository;
+import com.beyond.backend.data.repository.userRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p> 팀 서비스 상세
@@ -35,6 +41,8 @@ import java.util.List;
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
+    private final com.beyond.backend.data.repository.userRepository userRepository;
+    private final TeamUserRepository teamUserRepository;
 
     /**
      * TeamServiceImpl 생성자
@@ -42,29 +50,44 @@ public class TeamServiceImpl implements TeamService {
      * @see TeamRepository
      */
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, userRepository userRepository, TeamUserRepository teamUserRepository) {
         this.teamRepository = teamRepository;
+        this.userRepository = userRepository;
+        this.teamUserRepository = teamUserRepository;
     }
 
     /**
      * 팀 생성
-     *
-     * @param teamDto 팀 생성
-     * @return
      */
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
-        Team team = new Team();
-       // team.setName(teamDto.getName());
-       // team.setGoal(teamDto.getGoal());
-       // team.setLeaderid(teamDto.getLeaderid());
+        User user = userRepository.findById(teamDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
-        Team createTeam = teamRepository.save(team);
+        // 팀 저장
+        Team team = Team.builder()
+                .teamName(teamDto.getTeamName())
+                .teamIntroduce(teamDto.getTeamIntroduce())
+                .projectStatus(teamDto.getProjectStatus())
+                .timePeriod(new TimePeriod())
+                .build();
+        team = teamRepository.save(team);
 
-        TeamResponseDto  teamResponseDto = new TeamResponseDto();
-//        teamResponseDto.setName(createTeam.getName());
-//        teamResponseDto.setGoal(createTeam.getGoal());
-//        teamResponseDto.setLeaderid(createTeam.getLeaderid());
+        // TeamUser 저장
+        TeamUser teamUser = TeamUser.builder()
+                .user(user)
+                .team(team)
+                .status(true)
+                .build();
+        teamUserRepository.save(teamUser);
+
+        TeamResponseDto teamResponseDto = new TeamResponseDto(
+                team.getNo(),
+                team.getTeamName(),
+                team.getTeamIntroduce(),
+                team.getProjectStatus(),
+                team.getTimePeriod()
+        );
 
         return teamResponseDto;
     }

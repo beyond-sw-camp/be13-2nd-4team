@@ -1,16 +1,11 @@
 package com.beyond.backend.data.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.TimePeriod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * <p>
@@ -40,9 +35,7 @@ public class TeamResponseDto {
 
     private String teamIntroduce;
 
-    private String projectStatus;
+    private ProjectStatus projectStatus;
 
-    private String createdAt;
-
-    private String updatedAt;
+    private TimePeriod timePeriod;
 }
