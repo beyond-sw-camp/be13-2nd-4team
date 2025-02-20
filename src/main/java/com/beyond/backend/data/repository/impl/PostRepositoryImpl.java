@@ -40,7 +40,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     public Slice<PostResponseDto> getPostsByBoardType(BoardType boardType, Pageable pageable) {
         List<Post> posts = queryFactory
                 .selectFrom(post)
-                .where(post.boardType.eq(boardType), post.status.eq(com.beyond.backend.data.entity.Status.ACTIVE))
+                .where(post.boardType.eq(boardType), post.status.eq(Status.ACTIVE))
                 .orderBy(post.timePeriod.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
