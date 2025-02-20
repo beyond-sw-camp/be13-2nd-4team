@@ -22,6 +22,11 @@ public class Message {
 
     @Column(nullable = false)
     private LocalDateTime sentAt = LocalDateTime.now();
+  
+    @PrePersist
+    protected void onCreate() {
+        this.sentAt = (this.sentAt == null) ? LocalDateTime.now() : this.sentAt;
+    }
 
     @Lob
     @Column(nullable = false)
@@ -41,6 +46,9 @@ public class Message {
     @Column(nullable = false)
     private boolean deletedByReceiver;
 
+    @Column(nullable = false)
+    private boolean isRead = false;
+
     public void deleteBySender() {
         this.deletedBySender = true;
     }
@@ -52,4 +60,8 @@ public class Message {
     public boolean isDeleted() {
         return isDeletedBySender() && isDeletedByReceiver();
     }
+
+    public void markAsRead() {
+        this.isRead = true;
+    } // 읽음 안읽음
 }
