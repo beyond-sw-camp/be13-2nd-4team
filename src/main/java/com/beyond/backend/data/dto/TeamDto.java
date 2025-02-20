@@ -1,10 +1,10 @@
 package com.beyond.backend.data.dto;
 
+import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.Team;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * <p>
@@ -13,25 +13,25 @@ import lombok.ToString;
  * <p>fileName       : TeamDto
  * <p>author         : hongjm
  * <p>date           : 2025-02-03
- * <p>description    :
+ * <p>description    : 팀 Dto
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
+ * 2025-02-16        hongjm           Entity에 맞춰 수정
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
+@Builder
 @AllArgsConstructor
 public class TeamDto {
 
-    private String name;
+    private long id;
 
-    private String goal;
+    private String teamName;
 
-    private String leaderid;
+    private String teamIntroduce;
 
+    private ProjectStatus projectStatus;
 }

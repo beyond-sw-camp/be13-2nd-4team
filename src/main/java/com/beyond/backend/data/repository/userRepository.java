@@ -1,25 +1,23 @@
 package com.beyond.backend.data.repository;
 
-import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * <p> 팀 리포지토리
- * 
+ * <p>
+ *
  * <p>packageName    : com.beyond.backend.data.repository
- * <p>fileName       : TeamRepository
+ * <p>fileName       : UserRepository
  * <p>author         : hongjm
- * <p>date           : 2025-02-03
- * <p>description    : 팀 관련 리포지토리
+ * <p>date           : 25. 02. 19.
+ * <p>description    :
  */
- /*
+/*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-02-03        hongjm           최초 생성
+ * 25. 02. 19.        hongjm             최초 생성
  */
 
-public interface TeamRepository extends JpaRepository<Team, Long> {
-
-
+public interface userRepository extends JpaRepository<User, Long> {
 }

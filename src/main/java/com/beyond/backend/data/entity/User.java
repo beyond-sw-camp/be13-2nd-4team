@@ -68,8 +68,21 @@ public class User {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> receivedMessages = new HashSet<>();
 
-    // @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private Set<Comment> comments = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+    // [홍재민] 팀 구성과 연결
+    @OneToMany(mappedBy = "user")
+    private List<TeamUser> teamUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookMark> bookmarks;
 
     // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     // private Set<Post> posts = new HashSet<>();
