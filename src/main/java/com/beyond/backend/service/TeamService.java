@@ -27,7 +27,7 @@ import org.springframework.data.domain.Page;
 public interface TeamService {
     TeamResponseDto createTeam(TeamDto teamDto);
 
-    TeamResponseDto updateTeam(TeamDto team);
+    TeamResponseDto updateTeam(TeamDto team) throws Exception;
 
     Page<TeamSearchDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);

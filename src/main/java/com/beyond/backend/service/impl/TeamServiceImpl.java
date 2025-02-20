@@ -104,23 +104,26 @@ public class TeamServiceImpl implements TeamService {
      * @return TeamResponseDto
      */
     @Override
-    public TeamResponseDto updateTeam(TeamDto teamDto) {
+    public TeamResponseDto updateTeam(TeamDto teamDto) throws Exception{
 
-        Team team = Team.builder()
-                .no(teamDto.getId())
-                .teamName(teamDto.getTeamName())
-                .teamIntroduce(teamDto.getTeamIntroduce())
-                .projectStatus(teamDto.getProjectStatus())
-                .timePeriod(new TimePeriod())
-                .build();
-        team = teamRepository.save(team);
+        Team searchTeam = teamRepository.findById(teamDto.getId())
+                .orElseThrow(() -> new Exception("팀을 찾을 수 없습니다."));
+
+        searchTeam.updateTeamDetails(
+                teamDto.getTeamName(),
+                teamDto.getTeamIntroduce(),
+                teamDto.getProjectStatus(),
+                new TimePeriod()
+        );
+
+        Team updateTeam = teamRepository.save(searchTeam);
 
         return new TeamResponseDto(
-                team.getNo(),
-                team.getTeamName(),
-                team.getTeamIntroduce(),
-                team.getProjectStatus(),
-                team.getTimePeriod()
+                updateTeam.getNo(),
+                updateTeam.getTeamName(),
+                updateTeam.getTeamIntroduce(),
+                updateTeam.getProjectStatus(),
+                updateTeam.getTimePeriod()
         );
     }
 

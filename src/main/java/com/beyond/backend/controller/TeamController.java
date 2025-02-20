@@ -86,7 +86,7 @@ public class TeamController {
             @RequestParam Long teamNo,
             @RequestParam String teamName,
             @RequestParam(required = false) String teamIntroduce,
-            @RequestParam ProjectStatus projectStatus){
+            @RequestParam ProjectStatus projectStatus) throws Exception {
 
         TeamDto teamDto = new TeamDto(teamNo, teamName, teamIntroduce, projectStatus);
 

@@ -40,4 +40,11 @@ public class Team {
     @OneToOne(mappedBy = "team")
     private Project project;
 
+    public void updateTeamDetails(String teamName, String teamIntroduce, ProjectStatus projectStatus, TimePeriod timePeriod) {
+        this.teamName = teamName;
+        this.teamIntroduce = teamIntroduce;
+        this.projectStatus = projectStatus;
+        this.timePeriod = timePeriod;
+    }
+
 }
