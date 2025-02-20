@@ -1,5 +1,6 @@
 package com.beyond.backend.data.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -15,12 +16,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Table(name = "bookmarks",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"post_no", "user_no"})
-        }
-)
 public class BookMarkNo implements Serializable {
-    private Long postNo;
-    private Long userNo;
+
+    @Column(name = "post_no")
+    private Long postId;
+
+    @Column(name = "user_no")
+    private Long userId;
 }

@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
                 .address(userDto.getAddress())
                 .build();
         userRepository.save(user);
-        return user.getId();
+        return user.getNo();
     }
 
     private void validateDuplicateUser(UserSignUpDto userDto) {

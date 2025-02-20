@@ -32,7 +32,8 @@ import lombok.ToString;
 public class Project extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "no", nullable = false, unique = true)
+    private Long no;
 
     @Column(nullable = false)
     private String name;

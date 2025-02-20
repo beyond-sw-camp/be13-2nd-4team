@@ -1,10 +1,11 @@
-package com.beyond.backend.data.dto;
+package com.beyond.backend.data.dto.postDto;
 
+import com.beyond.backend.data.entity.BoardType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -21,15 +22,16 @@ import lombok.ToString;
  * -----------------------------------------------------------
  * 25. 2. 2.        hyunjo             최초 생성
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class PostDto {
-
-
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
+
+    @NotBlank(message = "내용은 필수입니다.")
     private String content;
-    private String userId;
+
+    @NotNull(message = "게시판 타입을 지정해야 합니다.")
+    private BoardType boardType;
 }
