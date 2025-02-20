@@ -24,7 +24,7 @@ import java.util.List;
  * 2025. 2. 3.        jaewoo             파라미터 명 변경
  * 2025. 2. 4.        jaewoo             파라미터 명 변경
  * 2025. 2. 16        jaewoo             getUserProjects 함수 추가
- * 2025. 2. 17        jaewoo             getProjectsByUserId 함수명 변경
+ * 2025. 2. 17        jaewoo             getProjectsByUsername 함수명 변경
  * 2025. 2. 17        jaewoo             getProjectsByTeamNo 함수명 변경
  * 2025. 2. 18        jaewoo             Pageable 추가
  */

@@ -22,5 +22,5 @@ public class BookMarkNo implements Serializable {
     private Long postId;
 
     @Column(name = "user_no")
-    private Long userId;
+    private Long username;
 }

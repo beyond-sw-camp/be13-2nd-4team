@@ -9,7 +9,7 @@ import com.beyond.backend.data.entity.TimePeriod;
 import com.beyond.backend.data.entity.User;
 import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.data.repository.TeamUserRepository;
-import com.beyond.backend.data.repository.userRepository;
+import com.beyond.backend.data.repository.UserRepository;
 import com.beyond.backend.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +41,7 @@ import java.util.List;
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
-    private final com.beyond.backend.data.repository.userRepository userRepository;
+    private final UserRepository userRepository;
     private final TeamUserRepository teamUserRepository;
 
     /**
@@ -52,7 +52,7 @@ public class TeamServiceImpl implements TeamService {
      * @see TeamRepository
      */
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, userRepository userRepository, TeamUserRepository teamUserRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, UserRepository userRepository, TeamUserRepository teamUserRepository) {
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
         this.teamUserRepository = teamUserRepository;

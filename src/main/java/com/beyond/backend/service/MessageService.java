@@ -22,16 +22,16 @@ DATE              AUTHOR             NOTE
 
 public interface MessageService {
 
-    MessageResponseDto getMessage(Long id, String userId); // 단일 조회
+    MessageResponseDto getMessage(Long id, String username); // 단일 조회
 
     MessageResponseDto messageWrite(MessageDto messageDto);
 
-    Object deleteMessageBySender(Long id, String userId);
+    Object deleteMessageBySender(Long id, String username);
 
-    Object deleteMessageByReceiver(Long id, String userId);
+    Object deleteMessageByReceiver(Long id, String username);
 
-    List<MessageResponseDto> sentMessages(String userId);
+    List<MessageResponseDto> sentMessages(String username);
 
-    List<MessageResponseDto> receivedMessages(String userId);
+    List<MessageResponseDto> receivedMessages(String username);
     // 3,4,5,6 얘네 나중에 시큐리티? 되면 User 객체로..
 }
