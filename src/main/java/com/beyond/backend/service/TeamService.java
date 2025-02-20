@@ -26,12 +26,10 @@ import org.springframework.data.domain.Page;
 public interface TeamService {
     TeamResponseDto createTeam(TeamDto teamDto);
 
-    TeamDto updateTeam(TeamDto team);
+    TeamResponseDto updateTeam(TeamDto team);
 
     Page<TeamSearchDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);
 
     void deleteTeam(Long id) throws Exception;
-
-
 }

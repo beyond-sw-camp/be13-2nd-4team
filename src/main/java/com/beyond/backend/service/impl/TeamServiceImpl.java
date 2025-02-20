@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <p> 팀 서비스 상세
@@ -36,6 +35,7 @@ import java.util.Optional;
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
  * 2025-02-18        hongjm           팀 조회 기능 추가 및 정리
+ * 2025-02-20        hongjm           팀 CRUD 정리 및 수정
  */
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -47,6 +47,8 @@ public class TeamServiceImpl implements TeamService {
     /**
      * TeamServiceImpl 생성자
      * @param teamRepository 팀 Repository
+     * @param userRepository 유저 Repository
+     * @param teamUserRepository 팀-유저 중간 Repository
      * @see TeamRepository
      */
     @Autowired
@@ -58,6 +60,9 @@ public class TeamServiceImpl implements TeamService {
 
     /**
      * 팀 생성
+     *
+     * @param teamDto 팀 생성 정보
+     * @return teamResponseDto
      */
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
@@ -95,16 +100,28 @@ public class TeamServiceImpl implements TeamService {
     /**
      * 팀 정보 수정
      *
-     * @param team 팀 정보
-     * @return TeamDto TeamDto
+     * @param teamDto 팀 정보
+     * @return TeamResponseDto
      */
     @Override
-    public TeamDto updateTeam(TeamDto team) {
-        return TeamDto.builder()
-                .teamName(team.getTeamName())
-                .teamIntroduce(team.getTeamIntroduce())
-                .projectStatus(team.getProjectStatus())
+    public TeamResponseDto updateTeam(TeamDto teamDto) {
+
+        Team team = Team.builder()
+                .no(teamDto.getId())
+                .teamName(teamDto.getTeamName())
+                .teamIntroduce(teamDto.getTeamIntroduce())
+                .projectStatus(teamDto.getProjectStatus())
+                .timePeriod(new TimePeriod())
                 .build();
+        team = teamRepository.save(team);
+
+        return new TeamResponseDto(
+                team.getNo(),
+                team.getTeamName(),
+                team.getTeamIntroduce(),
+                team.getProjectStatus(),
+                team.getTimePeriod()
+        );
     }
 
     /**
@@ -122,7 +139,7 @@ public class TeamServiceImpl implements TeamService {
     public Page<TeamSearchDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<TeamSearchDto> teams = teamRepository.findUserTeams(userNo, pageable);
+        Page<TeamSearchDto> teams = teamUserRepository.findUserTeams(userNo, pageable);
 
         List<TeamSearchDto> filteredTeams = teams.stream()
                 .filter(team -> teamName == null || team.getTeamName().contains(teamName))

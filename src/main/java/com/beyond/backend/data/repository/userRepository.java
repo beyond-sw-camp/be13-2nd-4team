@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * <p>
  *
  * <p>packageName    : com.beyond.backend.data.repository
- * <p>fileName       : PostRepository
+ * <p>fileName       : UserRepository
  * <p>author         : hongjm
  * <p>date           : 25. 02. 19.
  * <p>description    :

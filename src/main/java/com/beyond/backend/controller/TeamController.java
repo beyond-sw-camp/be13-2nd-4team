@@ -4,6 +4,7 @@ import com.beyond.backend.data.dto.TeamDto;
 import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,14 +44,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeamController {
 
     private final TeamService teamService;
+    private final TeamRepository teamRepository;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, TeamRepository teamRepository) {
         this.teamService = teamService;
+        this.teamRepository = teamRepository;
     }
 
+    /**
+     * 팀 생성 메소드
+     *
+     * @param userNo 유저번호
+     * @param teamName 팀 이름
+     * @param teamIntroduce 팀 설명
+     * @param projectStatus 프로젝트 상태
+     * @return teamResponseDto
+     */
     @Operation(summary = "팀 생성 메서드", description = "팀 생성 메서드입니다.")
     @PostMapping()
-    // public ResponseEntity<TeamResponseDto> createTeam(@RequestBody TeamDto team) {
     public ResponseEntity<TeamResponseDto> createTeam(
             @RequestParam Long userNo,
             @RequestParam String teamName,
@@ -68,11 +79,17 @@ public class TeamController {
      * 팀 수정 메소드
      *
      * @param teamDto 팀 정보
-     * @return teamDto ok
+     * @return teamDto
      */
     @Operation(summary = "팀 수정 메서드", description = "팀 수정 메서드 입니다.")
     @PutMapping()
-    public ResponseEntity<TeamDto> updateTeam(@RequestBody TeamDto teamDto) {
+    public ResponseEntity<TeamDto> updateTeam(
+            @RequestParam Long teamNo,
+            @RequestParam String teamName,
+            @RequestParam(required = false) String teamIntroduce,
+            @RequestParam ProjectStatus projectStatus){
+
+        TeamDto teamDto = new TeamDto(teamNo, teamName, teamIntroduce, projectStatus);
 
         teamService.updateTeam(teamDto);
 
