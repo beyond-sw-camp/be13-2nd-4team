@@ -46,5 +46,4 @@ public class Team {
         this.projectStatus = projectStatus;
         this.timePeriod = timePeriod;
     }
-
 }

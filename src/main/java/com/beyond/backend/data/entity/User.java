@@ -1,40 +1,45 @@
 package com.beyond.backend.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
+
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "user_id")})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User {
 
     @Id
-    @GeneratedValue
-    @Column(name = "user_no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
-    @Column(nullable = false, length = 50)
-    private String userId; //아이디
+    @Column(nullable = false, unique = true, length = 50)
+    private String username; //아이디
 
     @Column(nullable = false)
     private String name; //성명
 
     @Column(nullable = false)
-    private String nickname;
-
-    @Column(nullable = false)
     private String password;
 
     private String phoneNum;
+
+    @Builder
+    public User(String username, String name, String password, String phoneNum, String address, String email) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.phoneNum = phoneNum;
+        this.address = address;
+        this.email = email;
+    }
 
     private String address;
 
@@ -43,24 +48,25 @@ public class User {
     @Column(nullable = false)
     private Status status; //ACTIVE, INACTIVE, DELETED
 
+    @Column(nullable = false)
+    private LocalDateTime createAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     private String email;
-
-    @Embedded
-    private TimePeriod timePeriod;
-
-    //========================================================================
 
     //유저 뱃지와 1:N 관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserBadge> userBadges = new ArrayList<>();
+    private Set<UserBadge> userBadges = new HashSet<>();
 
     // 보낸 쪽지 리스트 (1:N 관계)
-    @OneToMany(mappedBy = "sender")
-    private List<Message> sentMessages = new ArrayList<>();
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> sentMessages = new HashSet<>();
 
     // 받은 쪽지 리스트 (1:N 관계)
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Message> receivedMessages = new ArrayList<>();
+    private Set<Message> receivedMessages = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
@@ -78,6 +84,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookMark> bookmarks;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserTech> userTeches;
+    // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private Set<Post> posts = new HashSet<>();
 }

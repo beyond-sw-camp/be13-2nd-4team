@@ -15,19 +15,17 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_no")
     private Long no;
 
     @Column(nullable = false)
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @Embedded
     private TimePeriod period;
 
-    //FK
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no", nullable = false)
     private User user;

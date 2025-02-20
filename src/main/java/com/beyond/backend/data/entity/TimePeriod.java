@@ -21,7 +21,7 @@ public class TimePeriod {
 
     @Column(nullable = true)
     private LocalDateTime updatedAt; // 최근 업데이트
-
+  
     // 홍재민 25-02-19 [시간 자동 설정 추가]
     @PrePersist
     public void prePersist() {

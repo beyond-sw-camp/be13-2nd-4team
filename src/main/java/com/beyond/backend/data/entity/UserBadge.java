@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
         @UniqueConstraint(columnNames = {"user_no", "badge_no"}) // 같은 뱃지를 중복 보유 방지
 })
 public class UserBadge {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
