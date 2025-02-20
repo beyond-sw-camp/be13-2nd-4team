@@ -10,19 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_badges", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "badge_id"}) // 같은 뱃지를 중복 보유 방지
+        @UniqueConstraint(columnNames = {"user_no", "badge_no"}) // 같은 뱃지를 중복 보유 방지
 })
 public class UserBadge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long no;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_no", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "badge_id", nullable = false)
+    @JoinColumn(name = "badge_no", nullable = false)
     private Badge badge;
 }

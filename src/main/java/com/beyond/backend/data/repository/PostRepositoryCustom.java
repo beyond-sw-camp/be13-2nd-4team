@@ -1,4 +1,4 @@
-package com.beyond.backend.service;
+package com.beyond.backend.data.repository;
 
 import com.beyond.backend.data.dto.postDto.PostResponseDto;
 import com.beyond.backend.data.entity.BoardType;
@@ -8,24 +8,19 @@ import org.springframework.data.domain.Slice;
 /**
  * <p>
  *
- * <p>packageName    : com.beyond.backend.service
- * <p>fileName       : PostService
+ * <p>packageName    : com.beyond.backend.data.repository
+ * <p>fileName       : PostRepositoryCustom
  * <p>author         : hyunjo
- * <p>date           : 25. 2. 2.
+ * <p>date           : 25. 2. 20.
  * <p>description    :
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 25. 2. 2.        hyunjo             최초 생성
- * 25. 2. 17.       hyunjo             내용 수정
- * 25. 2. 20.       hyunjo             내용 수정
- */public interface PostService {
-
-    Slice<PostResponseDto> getPosts(BoardType boardType, Pageable pageable);
+ * 25. 2. 20.        hyunjo             최초 생성
+ */public interface PostRepositoryCustom {
+    Slice<PostResponseDto> getPostsByBoardType(BoardType boardType, Pageable pageable);
 
     Slice<PostResponseDto> searchPosts(BoardType boardType, String keyword, Pageable pageable);
-
-    PostResponseDto getPostById(Long postId);
 }

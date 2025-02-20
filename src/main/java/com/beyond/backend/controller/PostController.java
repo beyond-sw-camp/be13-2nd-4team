@@ -1,19 +1,18 @@
 package com.beyond.backend.controller;
 
-import com.beyond.backend.data.dto.PostDto;
-import com.beyond.backend.data.dto.PostResponseDto;
+import com.beyond.backend.data.dto.postDto.PostResponseDto;
+import com.beyond.backend.data.entity.BoardType;
 import com.beyond.backend.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,43 +29,49 @@ import org.springframework.web.bind.annotation.RestController;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 25. 2. 2.        hyunjo             최초 생성
+ * 25. 2. 17.       hyunjo             내용 수정
+ * 25. 2. 20.       hyunjo             내용 수정
  */
-@Tag(name = "게시글 API", description = "게시글 CRUD API")
+
 @RestController
 @RequestMapping("/post")
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
+    @Operation(summary = "게시글 전체 조회", description = "게시판 타입별로 게시글 조회")
+    @GetMapping
+    public ResponseEntity<?> getPosts(
+            @RequestParam BoardType boardType,
+            @PageableDefault(size = 10)Pageable pageable) {
+        Slice<PostResponseDto> result = postService.getPosts(boardType, pageable);
+        if (result.isEmpty()) {
+            return ResponseEntity.ok("게시글이 존재하지 않습니다.");
+        }
+        return ResponseEntity.ok(result);
     }
 
-    @Operation(summary = "게시글 등록", description = "게시글을 등록합니다.")
-    @PostMapping()
-    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostDto postDto) {
-        PostResponseDto postResponseDto = postService.savePost(postDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(postResponseDto);
+    @Operation(summary = "게시글 검색", description = "제목, 내용, 작성자에서 검색어가 포함된 게시글 조회")
+    @GetMapping("/search")
+    public ResponseEntity<?> searchPosts(
+            @RequestParam BoardType boardType,
+            @RequestParam(required = false) String keyword,
+            @PageableDefault(size = 10)Pageable pageable) {
+        Slice<PostResponseDto> result = postService.searchPosts(boardType, keyword, pageable);
+        if (result.isEmpty()) {
+            return ResponseEntity.ok("게시글이 존재하지 않습니다.");
+        }
+        return ResponseEntity.ok(result);
     }
 
-    @Operation(summary = "게시글 조회", description = "게시글을 조회합니다.")
-    @GetMapping("/{id}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
-        PostResponseDto postResponseDto = postService.getPost(id);
-        return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
-    }
-
-    @Operation(summary = "게시글 수정", description = "게시글을 수정합니다.")
-    @PutMapping("/{id}")
-    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) throws Exception {
-        PostResponseDto postResponseDto = postService.updatePost(id, postDto);
-        return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
-    }
-
-    @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable Long id) throws Exception {
-        postService.deletePost(id);
-        return ResponseEntity.status(HttpStatus.OK).body("게시글이 삭제되었습니다.");
+    @Operation(summary = "게시글 단건 조회", description = "게시글 id로 조회")
+    @GetMapping("/{postId}")
+    public ResponseEntity<?> getPostById(@PathVariable Long postId) {
+        PostResponseDto post = postService.getPostById(postId);
+        if (post == null) {
+            return ResponseEntity.ok("해당 게시글이 존재하지 않습니다.");
+        }
+        return ResponseEntity.ok(post);
     }
 }

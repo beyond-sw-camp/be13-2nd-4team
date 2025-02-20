@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 당장은 필요없지만 확장성 위해
-    @Column(name = "post_no")
     private Long no;
 
     @Column(nullable = false)
@@ -35,6 +35,10 @@ public class Post {
     @Column(nullable = false)
     private BoardType boardType;
 
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'ALL'")
+    private SearchOption searchOption;
+
     @Embedded
     private TimePeriod timePeriod;
 
@@ -47,10 +51,10 @@ public class Post {
 
     //============================
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Like> likes = new ArrayList<>();
 
     //좋아요 연관관계 로직

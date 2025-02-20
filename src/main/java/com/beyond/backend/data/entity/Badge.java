@@ -16,7 +16,7 @@ public class Badge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long no;
 
     @Column(nullable = false, length = 255)
     private String description; // 뱃지 설명
