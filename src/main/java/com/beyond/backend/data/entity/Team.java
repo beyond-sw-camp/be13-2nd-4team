@@ -37,8 +37,8 @@ public class Team {
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeamUser> teamUsers = new ArrayList<>();
 
-    @OneToOne(mappedBy = "team")
-    private Project project;
+    // @OneToOne(mappedBy = "team")
+    // private Project project;
 
     public void updateTeamDetails(String teamName, String teamIntroduce, ProjectStatus projectStatus, TimePeriod timePeriod) {
         this.teamName = teamName;

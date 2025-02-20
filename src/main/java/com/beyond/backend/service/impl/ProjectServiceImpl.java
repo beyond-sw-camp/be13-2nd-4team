@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
  * 2025. 2. 16.       jaewoo             getUserProjects 함수 작성
- * 2025. 2. 17.       jaewoo             getProjectsByUserId 함수에 teamNo가 매개변수가 되게 작성
+ * 2025. 2. 17.       jaewoo             getProjectsByUsername 함수에 teamNo가 매개변수가 되게 작성
  * 2025. 2. 17.       jaewoo             getProjectsByTeamNo 함수명 변경
  * 2025. 2. 18.       jaewoo             teamNo를 알고 있는 상황이기 때문에 불필요한 코드 제거
  * 2025. 2. 18.       jaewoo             페이징 처리 코드 작성
@@ -125,12 +125,12 @@ public class ProjectServiceImpl implements ProjectService {
 
             dto.setId(project.getNo());
             dto.setName(project.getName());
-            dto.setProjectPurpose(project.getProjectPurpose());
-            dto.setProjectSubject(project.getProjectSubject());
-            dto.setProjectStatus(project.getProjectStatus());
-            dto.setProjectType(project.getProjectType());
-            dto.setFeedBacks(project.getFeedBacks());
-            dto.setProjectTeches(project.getProjectTeches());
+            // dto.setProjectPurpose(project.getProjectPurpose());
+            // dto.setProjectSubject(project.getProjectSubject());
+            // dto.setProjectStatus(project.getProjectStatus());
+            // dto.setProjectType(project.getProjectType());
+            // dto.setFeedBacks(project.getFeedBacks());
+            // dto.setProjectTeches(project.getProjectTeches());
             dto.setTeamNo(teamNo);
             dto.setTimePeriod(project.getTimePeriod());
 

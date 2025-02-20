@@ -21,7 +21,7 @@ DATE              AUTHOR             NOTE
 */
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> findAllBySender_UserId(String userId); // 시큐리티 되면 user 객체로
+    List<Message> findAllBySender_Username(String username); // 시큐리티 되면 user 객체로
 
-    List<Message> findAllByReceiver_UserId(String userId);// 시큐리티 되면 user 객체로
+    List<Message> findAllByReceiver_Username(String username);// 시큐리티 되면 user 객체로
 }
