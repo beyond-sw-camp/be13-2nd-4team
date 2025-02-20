@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
  * 2025-02-03        hongjm           최초 생성
  * 2025-02-15        hongjm           팀 검색 기능 추가
  * 2025-02-18        hongjm           팀 검색 페이징 기능 추가 및 보완
+ * 2025-02-20        hongjm           팀 CRUD 수정
  */
 
 public interface TeamService {

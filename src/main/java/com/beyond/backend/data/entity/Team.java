@@ -32,8 +32,9 @@ public class Team {
 
     @Enumerated(EnumType.STRING)
     private TimePeriod timePeriod;
-
-    @OneToMany(mappedBy = "team")
+    
+    // [홍재민] 25-02-20 팀-유저 중간테이블 cascade 설정
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeamUser> teamUsers = new ArrayList<>();
 
     @OneToOne(mappedBy = "team")

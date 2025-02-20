@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  * -----------------------------------------------------------
  * 2025-02-03        hongjm           최초 생성
  * 2025-02-18        hongjm           팀 조회 기능 추가
- * 2025-02-19        hongjm           팀 CRUD 수정
+ * 2025-02-20        hongjm           팀 CRUD 수정
  */
 @Tag(name = "팀 API", description = "팀 API")
 @RestController
@@ -44,16 +44,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeamController {
 
     private final TeamService teamService;
-    private final TeamRepository teamRepository;
 
-    public TeamController(TeamService teamService, TeamRepository teamRepository) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
-        this.teamRepository = teamRepository;
     }
 
     /**
      * 팀 생성 메소드
-     *
      * @param userNo 유저번호
      * @param teamName 팀 이름
      * @param teamIntroduce 팀 설명
@@ -77,8 +74,10 @@ public class TeamController {
 
     /**
      * 팀 수정 메소드
-     *
-     * @param teamDto 팀 정보
+     * @param teamNo 팀 번호
+     * @param teamName 팀 이름
+     * @param teamIntroduce 팀 정보
+     * @param projectStatus 팀 상태
      * @return teamDto
      */
     @Operation(summary = "팀 수정 메서드", description = "팀 수정 메서드 입니다.")
@@ -122,10 +121,18 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamSearch);
     }
 
+    /**
+     * 팀 삭제 메소드
+     * @param teamId 팀id
+     * @return 없음
+     * @throws Exception 예외없음
+     */
     @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")
     @DeleteMapping()
     public ResponseEntity<String> deleteTeam(Long teamId) throws Exception {
+
         teamService.deleteTeam(teamId);
+
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }
 }

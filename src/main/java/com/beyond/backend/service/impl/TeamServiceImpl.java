@@ -156,6 +156,7 @@ public class TeamServiceImpl implements TeamService {
      */
     @Override
     public void deleteTeam(Long id) throws Exception {
+
         teamRepository.deleteById(id);
     }
 }
