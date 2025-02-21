@@ -123,15 +123,15 @@ public class TeamController {
 
     /**
      * 팀 삭제 메소드
-     * @param teamId 팀id
+     * @param teamNo 팀no
      * @return 없음
      * @throws Exception 예외없음
      */
     @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")
     @DeleteMapping()
-    public ResponseEntity<String> deleteTeam(Long teamId) throws Exception {
+    public ResponseEntity<String> deleteTeam(Long teamNo) throws Exception {
 
-        teamService.deleteTeam(teamId);
+        teamService.deleteTeam(teamNo);
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }

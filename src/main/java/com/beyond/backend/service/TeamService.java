@@ -32,5 +32,5 @@ public interface TeamService {
     Page<TeamSearchDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);
 
-    void deleteTeam(Long id) throws Exception;
+    void deleteTeam(Long no) throws Exception;
 }

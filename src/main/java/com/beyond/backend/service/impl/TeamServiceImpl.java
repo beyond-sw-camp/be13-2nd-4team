@@ -66,7 +66,7 @@ public class TeamServiceImpl implements TeamService {
      */
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
-        User user = userRepository.findById(teamDto.getId())
+        User user = userRepository.findById(teamDto.getNo())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         // 팀 저장
@@ -102,11 +102,12 @@ public class TeamServiceImpl implements TeamService {
      *
      * @param teamDto 팀 정보
      * @return TeamResponseDto
+     * @throws Exception 팀을 찾을 수 없습니다.
      */
     @Override
     public TeamResponseDto updateTeam(TeamDto teamDto) throws Exception{
 
-        Team searchTeam = teamRepository.findById(teamDto.getId())
+        Team searchTeam = teamRepository.findById(teamDto.getNo())
                 .orElseThrow(() -> new Exception("팀을 찾을 수 없습니다."));
 
         searchTeam.updateTeamDetails(
@@ -154,12 +155,14 @@ public class TeamServiceImpl implements TeamService {
 
     /**
      * 팀 삭제
-     * @param id 팀 ID
-     * @throws Exception
+     * @param no 팀 ID
+     * @throws Exception 팀이 존재하지 않습니다.
      */
     @Override
-    public void deleteTeam(Long id) throws Exception {
+    public void deleteTeam(Long no) throws Exception {
+        Team searchTeam = teamRepository.findById(no)
+                .orElseThrow(() -> new Exception("팀이 존재하지 않습니다."));
 
-        teamRepository.deleteById(id);
+        teamRepository.deleteById(no);
     }
 }
