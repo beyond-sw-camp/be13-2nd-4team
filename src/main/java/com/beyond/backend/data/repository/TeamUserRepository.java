@@ -75,7 +75,15 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "WHERE t.no = :teamNo AND tu.status = true")
     List<TeamMemberListDto> findByTeamNoForNonLeader(@Param("teamNo") Long teamNo);
 
-
-
+    /**
+     * 유저가 팀에 속해있는지 여부
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return Boolean
+     */
+    @Query("SELECT COUNT(tu) > 0 " +
+            "FROM TeamUser tu " +
+            "WHERE tu.team.no = :teamNo AND tu.user.no = :userNo ")
+    Boolean findByUserNoEquals (@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
 
 }

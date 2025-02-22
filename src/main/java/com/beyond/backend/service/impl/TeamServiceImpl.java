@@ -4,6 +4,7 @@ import com.beyond.backend.data.dto.teamDto.TeamDto;
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
 import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
 import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
+import com.beyond.backend.data.entity.ProjectStatus;
 import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.entity.TeamUser;
 import com.beyond.backend.data.entity.TimePeriod;
@@ -184,8 +185,8 @@ public class TeamServiceImpl implements TeamService {
      */
     @Override
     public List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception {
-        Team searchTeam = teamRepository.findById(teamNo)
-                .orElseThrow(() -> new Exception("팀이 존재하지 않습니다."));
+        teamRepository.findById(teamNo)
+                .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
 
         Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
         if (isLeader != null && isLeader) {
@@ -194,4 +195,37 @@ public class TeamServiceImpl implements TeamService {
             return teamUserRepository.findByTeamNoForNonLeader(teamNo);
         }
     }
+
+    /**
+     * 팀원 신청
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @throws Exception 팀이 존재하지 않습니다.
+     * @throws Exception 유저가 존재하지 않습니다.
+     * @throws Exception 모집중이 아닙니다!
+     * @throws Exception 이미 등록되었거나 요청한 팀 입니다!!
+     */
+    @Override
+    public void teamJoinRequest(Long teamNo, Long userNo) throws Exception {
+        Team Team = teamRepository.findById(teamNo)
+                .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
+        User user = userRepository.findById(userNo)
+                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
+
+        if(Team.getProjectStatus() != ProjectStatus.OPEN){
+            throw new IllegalArgumentException("모집중이 아닙니다!");
+        }
+        if(teamUserRepository.findByUserNoEquals(teamNo, userNo)){
+            throw new IllegalArgumentException("이미 등록되었거나 요청한 팀 입니다!!");
+        }
+
+        TeamUser teamUser = TeamUser.builder()
+                .user(user)
+                .team(Team)
+                .status(false)
+                .isLeader(false)
+                .build();
+        teamUserRepository.save(teamUser);
+    }
+
 }

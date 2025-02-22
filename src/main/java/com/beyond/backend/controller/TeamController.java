@@ -154,4 +154,22 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.OK).body(teamMembers);
     }
+
+    /**
+     * 팀원 추가 신청 메서드
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return 없음
+     * @throws Exception 팀이 존재하지 않습니다.
+     * @throws Exception 유저가 존재하지 않습니다.
+     * @throws Exception 모집중이 아닙니다!
+     * @throws Exception 이미 등록되었거나 요청한 팀 입니다!!
+     */
+    @Operation(summary = "팀원 추가 신청 메서드", description = "팀원 추가 신청 메서드입니다.")
+    @PostMapping("/joinRequest")
+    public ResponseEntity<String> teamJoinRequest (Long teamNo, Long userNo) throws Exception {
+        teamService.teamJoinRequest(teamNo, userNo);
+
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 신청되었습니다.");
+    }
 }

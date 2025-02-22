@@ -38,4 +38,6 @@ public interface TeamService {
     void deleteTeam(Long no) throws Exception;
 
     List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception;
+
+    void teamJoinRequest(Long teamNo, Long userNo) throws Exception;
 }
