@@ -83,7 +83,7 @@ public class TeamController {
      * @return teamDto
      */
     @Operation(summary = "팀 수정 메서드", description = "팀 수정 메서드 입니다.")
-    @PutMapping("/setting/fix")
+    @PutMapping("/setting/update")
     public ResponseEntity<TeamDto> updateTeam(
             @RequestParam Long teamNo,
             @RequestParam String teamName,
@@ -139,6 +139,23 @@ public class TeamController {
     }
 
     /**
+     * [팀장] 팀원 신청 목록 조회
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return TeamMemberListDto
+     * @throws Exception 권한이 없습니다!
+     */
+    @Operation(summary = "[팀장] 팀원 신청 목록 조회", description = "팀원 신청 목록 조회 메서드입니다.")
+    @GetMapping("/member/setting")
+    public ResponseEntity<List<TeamMemberListDto>> getMemberRequest(
+            @RequestParam Long teamNo,
+            @RequestParam Long userNo) throws Exception {
+        List<TeamMemberListDto> teamMemberRequest = teamService.getTeamMemberRequest(teamNo, userNo);
+
+        return ResponseEntity.status(HttpStatus.OK).body(teamMemberRequest);
+    }
+
+    /**
      * 팀원 목록 조회 메서드
      * @param teamNo 팀번호
      * @param userNo 유저번호
@@ -172,4 +189,6 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 신청되었습니다.");
     }
+
+
 }

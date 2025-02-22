@@ -50,7 +50,7 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
     Boolean isLeader(@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
 
     /**
-     * 해당 팀의 전체 팀원 조회
+     * 해당 팀의 팀원 요청 조회
      * @param teamNo 팀번호
      * @return TeamMemberListDto
      */
@@ -59,8 +59,8 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "FROM Team t " +
             "JOIN TeamUser tu ON t.no = tu.team.no " +
             "JOIN User u ON u.no = tu.user.no " +
-            "WHERE t.no = :teamNo")
-    List<TeamMemberListDto> findByTeamNoForLeader(@Param("teamNo") Long teamNo);
+            "WHERE t.no = :teamNo AND tu.status = FALSE ")
+    List<TeamMemberListDto> findByTeamNoForMemberRequest(@Param("teamNo") Long teamNo);
 
     /**
      * 해당 팀의 활성 팀원 조회

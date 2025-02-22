@@ -39,5 +39,8 @@ public interface TeamService {
 
     List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception;
 
+    // [팀장] 팀원 신청 목록 조회
+    List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception;
+
     void teamJoinRequest(Long teamNo, Long userNo) throws Exception;
 }

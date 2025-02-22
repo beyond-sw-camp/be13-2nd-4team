@@ -188,11 +188,23 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.findById(teamNo)
                 .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
 
+        return teamUserRepository.findByTeamNoForNonLeader(teamNo);
+    }
+
+    /**
+     * [팀장] 팀원 신청 목록 조회
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return TeamMemberListDto
+     * @throws Exception 권한이 없습니다!
+     */
+    @Override
+    public List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception{
         Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
         if (isLeader != null && isLeader) {
-            return teamUserRepository.findByTeamNoForLeader(teamNo);
+            return teamUserRepository.findByTeamNoForMemberRequest(teamNo);
         } else {
-            return teamUserRepository.findByTeamNoForNonLeader(teamNo);
+            throw new IllegalArgumentException("권한이 없습니다!");
         }
     }
 
