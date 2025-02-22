@@ -1,10 +1,11 @@
 package com.beyond.backend.controller;
 
-import com.beyond.backend.data.dto.TeamDto;
-import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.dto.TeamSearchDto;
+import com.beyond.backend.data.dto.teamDto.TeamDto;
+import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
+import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
+import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
 import com.beyond.backend.data.entity.ProjectStatus;
-import com.beyond.backend.data.repository.TeamRepository;
+import com.beyond.backend.data.repository.TeamUserRepository;
 import com.beyond.backend.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p> 팀 컨트롤러
@@ -58,7 +60,7 @@ public class TeamController {
      * @return teamResponseDto
      */
     @Operation(summary = "팀 생성 메서드", description = "팀 생성 메서드입니다.")
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<TeamResponseDto> createTeam(
             @RequestParam Long userNo,
             @RequestParam String teamName,
@@ -81,7 +83,7 @@ public class TeamController {
      * @return teamDto
      */
     @Operation(summary = "팀 수정 메서드", description = "팀 수정 메서드 입니다.")
-    @PutMapping()
+    @PutMapping("/setting/fix")
     public ResponseEntity<TeamDto> updateTeam(
             @RequestParam Long teamNo,
             @RequestParam String teamName,
@@ -107,7 +109,7 @@ public class TeamController {
      * @return teamSearch 검색 결과값 반환
      */
     @Operation(summary = "팀 조회 메서드", description = "유저 번호로 해당 유저의 모든 팀을 조회하는 메서드 입니다.")
-    @GetMapping()
+    @GetMapping("/find")
     public ResponseEntity<Page<TeamSearchDto>> getUserTeams(
             @RequestParam Long userNo,
             @RequestParam(required = false)  String teamName,
@@ -122,17 +124,34 @@ public class TeamController {
     }
 
     /**
-     * 팀 삭제 메소드
+     * 팀 삭제 메서드
      * @param teamNo 팀no
      * @return 없음
-     * @throws Exception 예외없음
+     * @throws Exception 팀이 존재하지 않습니다.
      */
     @Operation(summary = "팀 삭제 메서드", description = "팀 삭제 메서드입니다.")
-    @DeleteMapping()
+    @DeleteMapping("/setting/delete")
     public ResponseEntity<String> deleteTeam(Long teamNo) throws Exception {
 
         teamService.deleteTeam(teamNo);
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
+    }
+
+    /**
+     * 팀원 목록 조회 메서드
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return TeamMemberListDto
+     * @throws Exception 팀이 존재하지 않습니다.
+     */
+    @Operation(summary = "팀원 목록 조회 메서드", description = "팀원 목록 조회 메서드입니다.")
+    @GetMapping("/find/team")
+    public ResponseEntity<List<TeamMemberListDto>> getUserTeams(
+            @RequestParam Long teamNo,
+            @RequestParam Long userNo) throws Exception {
+        List<TeamMemberListDto> teamMembers = teamService.getTeamMembers(teamNo, userNo);
+
+        return ResponseEntity.status(HttpStatus.OK).body(teamMembers);
     }
 }

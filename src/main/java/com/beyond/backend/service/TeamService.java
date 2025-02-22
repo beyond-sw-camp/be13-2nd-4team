@@ -1,9 +1,12 @@
 package com.beyond.backend.service;
 
-import com.beyond.backend.data.dto.TeamDto;
-import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.dto.TeamSearchDto;
+import com.beyond.backend.data.dto.teamDto.TeamDto;
+import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
+import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
+import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 /**
  * <p> 팀 서비스
@@ -33,4 +36,6 @@ public interface TeamService {
             Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);
 
     void deleteTeam(Long no) throws Exception;
+
+    List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception;
 }

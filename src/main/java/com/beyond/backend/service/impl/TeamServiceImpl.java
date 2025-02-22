@@ -1,8 +1,9 @@
 package com.beyond.backend.service.impl;
 
-import com.beyond.backend.data.dto.TeamDto;
-import com.beyond.backend.data.dto.TeamResponseDto;
-import com.beyond.backend.data.dto.TeamSearchDto;
+import com.beyond.backend.data.dto.teamDto.TeamDto;
+import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
+import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
+import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
 import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.entity.TeamUser;
 import com.beyond.backend.data.entity.TimePeriod;
@@ -11,6 +12,7 @@ import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.data.repository.TeamUserRepository;
 import com.beyond.backend.data.repository.UserRepository;
 import com.beyond.backend.service.TeamService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,6 +39,7 @@ import java.util.List;
  * 2025-02-18        hongjm           팀 조회 기능 추가 및 정리
  * 2025-02-20        hongjm           팀 CRUD 정리 및 수정
  */
+@Slf4j
 @Service
 public class TeamServiceImpl implements TeamService {
 
@@ -57,6 +60,9 @@ public class TeamServiceImpl implements TeamService {
         this.userRepository = userRepository;
         this.teamUserRepository = teamUserRepository;
     }
+
+    /* 팀 전체 페이지 페이지*/
+    /* 기본적인 CRUD */
 
     /**
      * 팀 생성
@@ -83,6 +89,7 @@ public class TeamServiceImpl implements TeamService {
                 .user(user)
                 .team(team)
                 .status(true)
+                .isLeader(true)
                 .build();
         teamUserRepository.save(teamUser);
 
@@ -164,5 +171,27 @@ public class TeamServiceImpl implements TeamService {
                 .orElseThrow(() -> new Exception("팀이 존재하지 않습니다."));
 
         teamRepository.deleteById(no);
+    }
+
+    /* --------- 팀 디테일 페이지 ----------*/
+
+    /**
+     * 팀원 목록 조회 서비스
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return TeamMemberListDto
+     * @throws Exception 팀이 존재하지 않습니다.
+     */
+    @Override
+    public List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception {
+        Team searchTeam = teamRepository.findById(teamNo)
+                .orElseThrow(() -> new Exception("팀이 존재하지 않습니다."));
+
+        Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
+        if (isLeader != null && isLeader) {
+            return teamUserRepository.findByTeamNoForLeader(teamNo);
+        } else {
+            return teamUserRepository.findByTeamNoForNonLeader(teamNo);
+        }
     }
 }
