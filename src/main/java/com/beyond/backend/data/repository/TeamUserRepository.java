@@ -1,7 +1,10 @@
 package com.beyond.backend.data.repository;
 
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
-import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
+import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
+import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.Status;
+import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.entity.TeamUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,17 +28,36 @@ import java.util.List;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-20        hongjm           최초 생성
+ * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
+ * 2025-02-23        hongjm           기능 추가 및 코드 정리
  */
 
 public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
 
-    @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamSearchDto" +
-            "(t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
-            "FROM User u " +
-            "JOIN TeamUser tu ON u.no = tu.user.no " +
-            "JOIN Team t ON tu.team.no = t.no " +
-            "WHERE u.no = :userNo")
-    Page<TeamSearchDto> findUserTeams(@Param("userNo") Long userNo, Pageable pageable);
+    /**
+     * 모든 팀 정보 조회
+     * @param status  (필터) 팀 상태
+     * @param pageable 페이징 크기
+     * @return TeamResponseDto
+     */
+    @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamResponseDto" +
+            "(t.no, t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
+            "FROM Team t " +
+            "WHERE (:status IS NULL OR  t.projectStatus = :status)")
+    Page<TeamResponseDto> findByStatusForTeams(@Param("status") ProjectStatus status, Pageable pageable);
+
+    /**
+     * 유저가 활동한 모든 팀 조회
+     * @param userNo 유저번호
+     * @param pageable 페이징 크기
+     * @return TeamSearchDto
+     */
+    @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamResponseDto" +
+            "(t.no, t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
+            "FROM Team t " +
+            "JOIN t.teamUsers tu " +
+            "WHERE tu.user.no = :userNo")
+    Page<TeamResponseDto> findByUserNoForUserTeams(@Param("userNo") Long userNo, Pageable pageable);
 
     /**
      * 해당 팀의 리더 여부 확인
@@ -85,5 +107,17 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "FROM TeamUser tu " +
             "WHERE tu.team.no = :teamNo AND tu.user.no = :userNo ")
     Boolean findByUserNoEquals (@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
+
+    /**
+     * 유저번호로 teamUserNo 검색
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @return Long TeamUser.no
+     */
+    @Query("SELECT tu.no " +
+            "FROM TeamUser tu " +
+            "WHERE tu.team.no = :teamNo AND tu.user.no = :userNo ")
+    Long findByUserNoForTeamUserNo (@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
+
 
 }

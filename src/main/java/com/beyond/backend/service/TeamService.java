@@ -3,8 +3,8 @@ package com.beyond.backend.service;
 import com.beyond.backend.data.dto.teamDto.TeamDto;
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
 import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
-import com.beyond.backend.data.dto.teamDto.TeamSearchDto;
-import org.springframework.data.domain.Page;
+import com.beyond.backend.data.entity.ProjectStatus;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ import java.util.List;
  * 2025-02-15        hongjm           팀 검색 기능 추가
  * 2025-02-18        hongjm           팀 검색 페이징 기능 추가 및 보완
  * 2025-02-20        hongjm           팀 CRUD 수정
+ * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  */
 
 public interface TeamService {
@@ -32,15 +33,31 @@ public interface TeamService {
 
     TeamResponseDto updateTeam(TeamDto team) throws Exception;
 
-    Page<TeamSearchDto> filterUserTeams(
-            Long userNo, String teamName, String teamIntroduce, String projectStatus, int page, int size);
+    // 모든 팀 정보 조회
+    PageImpl<TeamResponseDto> allUserTeams(String teamName, String teamIntroduce, ProjectStatus projectStatus, int page, int size);
 
+    // userNo로 팀 정보 조회
+    PageImpl<TeamResponseDto> filterUserTeams(
+            Long userNo, String teamName, String teamIntroduce, ProjectStatus projectStatus, int page, int size);
+
+    // 팀 삭제
     void deleteTeam(Long no) throws Exception;
 
+    // 팀원 목록 조회
     List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception;
 
     // [팀장] 팀원 신청 목록 조회
     List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception;
 
+    // [팀장] 팀원 신청 수락
+    void teamAccept(Long teamNo, Long userNo) throws Exception;
+    
+    // [팀장] 팀원 신청 거부
+    void teamDelete(Long teamNo, Long userNo) throws Exception;
+
+    // 팀원 신청
     void teamJoinRequest(Long teamNo, Long userNo) throws Exception;
+    
+    // 팀원 신청 취소 / 탈퇴
+    void teamJoinRequestCancel(Long teamNo, Long userNo) throws Exception;
 }
