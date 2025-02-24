@@ -32,6 +32,6 @@ public class Team {
     @JoinColumn(name = "user_no", nullable = false)
     private User user;
 
-    @OneToOne(mappedBy = "team")
-    private Project project;
+    // @OneToOne(mappedBy = "team")
+    // private Project project;
 }

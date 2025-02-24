@@ -20,6 +20,14 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
+    @Column(nullable = false)
+    private LocalDateTime sentAt = LocalDateTime.now();
+
+    @PrePersist
+    protected void onCreate() {
+        this.sentAt = (this.sentAt == null) ? LocalDateTime.now() : this.sentAt;
+    }
+
     @Lob
     @Column(nullable = false)
     private String content;
@@ -39,14 +47,6 @@ public class Message {
     private boolean deletedByReceiver;
 
     @Column(nullable = false)
-    private LocalDateTime sentAt = LocalDateTime.now();
-
-    @PrePersist
-    protected void onCreate() {
-        this.sentAt = (this.sentAt == null) ? LocalDateTime.now() : this.sentAt;
-    }
-
-    @Column(nullable = false)
     private boolean isRead = false;
 
     public void deleteBySender() {
@@ -64,6 +64,4 @@ public class Message {
     public void markAsRead() {
         this.isRead = true;
     } // 읽음 안읽음
-
-
 }

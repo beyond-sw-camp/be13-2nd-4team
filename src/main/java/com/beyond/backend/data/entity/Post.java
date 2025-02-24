@@ -58,6 +58,6 @@ public class Post {
         return likes.size();
     }
 
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<BookMark> bookmarks;
+    //    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    //    private List<BookMark> bookmarks;
 }
