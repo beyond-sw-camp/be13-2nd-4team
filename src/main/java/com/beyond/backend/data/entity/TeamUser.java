@@ -37,7 +37,10 @@ public class TeamUser {
     @Column(nullable = false)
     private boolean status; // 승인여부
 
-    @Column
-    private String role;
+    @Column(nullable = false)
+    private boolean isLeader;
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
