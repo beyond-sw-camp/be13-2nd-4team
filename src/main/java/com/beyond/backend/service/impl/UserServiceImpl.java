@@ -2,6 +2,8 @@ package com.beyond.backend.service.impl;
 
 import com.beyond.backend.data.dto.userDto.LoginDto;
 import com.beyond.backend.data.dto.userDto.UserSignUpDto;
+import com.beyond.backend.data.entity.Status;
+import com.beyond.backend.data.entity.TimePeriod;
 import com.beyond.backend.data.entity.User;
 import com.beyond.backend.data.repository.UserRepository;
 import com.beyond.backend.service.UserService;
@@ -27,9 +29,11 @@ public class UserServiceImpl implements UserService {
                 .email(userDto.getEmail())
                 .phoneNum(userDto.getPhoneNum())
                 .address(userDto.getAddress())
+                .status(Status.ACTIVE)
+                .timePeriod(new TimePeriod())
                 .build();
         userRepository.save(user);
-        return user.getId();
+        return user.getNo();
     }
 
     private void validateDuplicateUser(UserSignUpDto userDto) {

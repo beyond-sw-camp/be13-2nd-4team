@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long no;
 
     @Column(nullable = false, unique = true, length = 50)
     private String username; //아이디
@@ -32,13 +34,15 @@ public class User {
     private String phoneNum;
 
     @Builder
-    public User(String username, String name, String password, String phoneNum, String address, String email) {
+    public User(String username, String name, String password, String phoneNum, String address, String email, Status status, TimePeriod timePeriod) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.phoneNum = phoneNum;
         this.address = address;
         this.email = email;
+        this.status = status;
+        this.timePeriod = timePeriod;
     }
 
     private String address;
@@ -48,11 +52,8 @@ public class User {
     @Column(nullable = false)
     private Status status; //ACTIVE, INACTIVE, DELETED
 
-    @Column(nullable = false)
-    private LocalDateTime createAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    @Embedded
+    private TimePeriod timePeriod;
 
     private String email;
 
@@ -68,8 +69,21 @@ public class User {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> receivedMessages = new HashSet<>();
 
-    // @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private Set<Comment> comments = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+    // [홍재민] 팀 구성과 연결
+    @OneToMany(mappedBy = "user")
+    private List<TeamUser> teamUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookMark> bookmarks;
 
     // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     // private Set<Post> posts = new HashSet<>();

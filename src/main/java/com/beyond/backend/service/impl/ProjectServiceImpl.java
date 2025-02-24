@@ -6,6 +6,8 @@ import com.beyond.backend.data.entity.Project;
 import com.beyond.backend.data.repository.ProjectRepository;
 import com.beyond.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +26,11 @@ import org.springframework.stereotype.Service;
  * 2025. 2. 2.        jaewoo             최초 생성
  * 2025. 2. 3.        jaewoo             함수명 수정
  * 2025. 2. 4.        jaewoo             함수명 수정
+ * 2025. 2. 16.       jaewoo             getUserProjects 함수 작성
+ * 2025. 2. 17.       jaewoo             getProjectsByUsername 함수에 teamNo가 매개변수가 되게 작성
+ * 2025. 2. 17.       jaewoo             getProjectsByTeamNo 함수명 변경
+ * 2025. 2. 18.       jaewoo             teamNo를 알고 있는 상황이기 때문에 불필요한 코드 제거
+ * 2025. 2. 18.       jaewoo             페이징 처리 코드 작성
  */
 
 @Service
@@ -64,24 +71,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectResponseDto;
     }
 
-    /**
-     * 프로젝트 조회
-     * @param id 프로젝트 ID
-     * @return ProjectResponseDto projectResponseDto
-     * @see ProjectResponseDto
-     */
-    @Override
-    public ProjectResponseDto getProject(Long id) {
-        Project project = projectRepository.findById(id).get();
-
-        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-//        projectResponseDto.setId(project.getId());
-//        projectResponseDto.setName(project.getName());
-//        projectResponseDto.setContent(project.getContent());
-//        projectResponseDto.setUserCount(project.getUserCount());
-
-        return projectResponseDto;
-    }
 
     /**
      * 프로젝트 업데이트
@@ -119,5 +108,33 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteProject(Long id) throws Exception {
         projectRepository.deleteById(id);
+    }
+
+    /**
+     * 프로젝트 조회
+     * @param teamNo 팀 id
+     * @param pageable 페이지
+     * @return Page ProgectResponseDto
+     */
+    @Override
+    public Page<ProjectResponseDto> getProjectsByTeamNo(Long teamNo, Pageable pageable) {
+        Page<Project> projectPage = projectRepository.findByTeamNo(teamNo, pageable);
+
+        return projectPage.map(project -> {
+            ProjectResponseDto dto = new ProjectResponseDto();
+
+            dto.setId(project.getNo());
+            dto.setName(project.getName());
+            // dto.setProjectPurpose(project.getProjectPurpose());
+            // dto.setProjectSubject(project.getProjectSubject());
+            // dto.setProjectStatus(project.getProjectStatus());
+            // dto.setProjectType(project.getProjectType());
+            // dto.setFeedBacks(project.getFeedBacks());
+            // dto.setProjectTeches(project.getProjectTeches());
+            dto.setTeamNo(teamNo);
+            dto.setTimePeriod(project.getTimePeriod());
+
+            return dto;
+        });
     }
 }

@@ -35,8 +35,6 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.OK).body(messageResponseDto);
     }
 
-
-    @Operation(summary = "쪽지 생성(전송)", description = "쪽지를 생성(전송)합니다.")
     @PostMapping("/write")
     public ResponseEntity<MessageResponseDto> sendMessage(@RequestBody MessageDto messageDto) {
         MessageResponseDto messageResponseDto = messageService.messageWrite(messageDto);
@@ -127,12 +125,10 @@ public class MessageController {
     }
 
 
-    //    @DeleteMapping("/delete")
+//    @DeleteMapping("/delete")
 //    public ResponseEntity<String> deleteMessage(Long id) throws Exception {
 //        messageService.deleteMessage(id);
 //
 //        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다");
 //    }
-
-
 }

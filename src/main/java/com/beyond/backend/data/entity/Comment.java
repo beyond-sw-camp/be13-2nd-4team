@@ -14,8 +14,8 @@ import lombok.ToString;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ 전략 추가 (권장)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long no;
 
     @Column(nullable = false)
     private String content;
@@ -27,10 +27,10 @@ public class Comment {
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user", nullable = false)
+    @JoinColumn(name = "user_no", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post", nullable = false)
+    @JoinColumn(name = "post_no", nullable = false)
     private Post post;
 }

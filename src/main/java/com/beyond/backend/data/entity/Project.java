@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *
@@ -32,15 +35,33 @@ import lombok.ToString;
 public class Project extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "no", nullable = false, unique = true)
+    private Long no;
 
     @Column(nullable = false)
     private String name;
 
+    private String projectPurpose;
 
+    private String projectSubject;
+
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
+
+    @Enumerated(EnumType.STRING)
+    private ProjectType projectType;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FeedBack> feedBacks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectTech> projectTeches;
+
+    @OneToOne
+    @JoinColumn(name = "team_no")
+    private Team team;
 
     private String content;
-
 
     @Embedded
     private TimePeriod timePeriod;

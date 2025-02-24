@@ -7,29 +7,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
- * <p>
+ * <p> 팀 검색 Dto
  *
  * <p>packageName    : com.beyond.backend.data.dto
- * <p>fileName       : TeamResponseDto
+ * <p>fileName       : TeamUserDto
  * <p>author         : hongjm
- * <p>date           : 2025-02-03
- * <p>description    : 팀 상세 Dto
+ * <p>date           : 2025-02-16
+ * <p>description    : userNo로 팀을 반환
  */
 /*
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-02-03        hongjm           최초 생성
- * 2025-02-16        hongjm           Entity에 맞춰 수정
+ * 2025-02-16        hongjm           최초 생성
+ * 2025-02-18        hongjm           간소화
  */
+
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class TeamResponseDto {
-
-    private long id;
+public class TeamSearchDto {
 
     private String teamName;
 
@@ -38,4 +37,5 @@ public class TeamResponseDto {
     private ProjectStatus projectStatus;
 
     private TimePeriod timePeriod;
+
 }
