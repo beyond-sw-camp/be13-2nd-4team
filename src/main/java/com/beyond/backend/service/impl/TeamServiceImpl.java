@@ -205,12 +205,11 @@ public class TeamServiceImpl implements TeamService {
      * 팀원 목록 조회 서비스
      *
      * @param teamNo 팀번호
-     * @param userNo 유저번호
      * @return TeamMemberListDto
      * @throws Exception 팀이 존재하지 않습니다.
      */
     @Override
-    public List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception {
+    public List<TeamMemberListDto> getTeamMembers(Long teamNo) throws Exception {
         teamRepository.findById(teamNo)
                 .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
 

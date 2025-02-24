@@ -26,11 +26,14 @@ import java.util.List;
  * 2025-02-18        hongjm           팀 검색 페이징 기능 추가 및 보완
  * 2025-02-20        hongjm           팀 CRUD 수정
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
+ * 2025-02-24        hongjm           코드 정리
  */
 
 public interface TeamService {
+    // 팀 생성
     TeamResponseDto createTeam(TeamDto teamDto);
-
+    
+    // 팀 정보 업데이트
     TeamResponseDto updateTeam(TeamDto team) throws Exception;
 
     // 모든 팀 정보 조회
@@ -44,7 +47,7 @@ public interface TeamService {
     void deleteTeam(Long no) throws Exception;
 
     // 팀원 목록 조회
-    List<TeamMemberListDto> getTeamMembers(Long teamNo, Long userNo) throws Exception;
+    List<TeamMemberListDto> getTeamMembers(Long teamNo) throws Exception;
 
     // [팀장] 팀원 신청 목록 조회
     List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception;
