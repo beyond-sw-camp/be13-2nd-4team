@@ -46,10 +46,10 @@ public class MessageResponseDto {
                 message.getContent(),
                 message.getSender().getName(),
                 message.getSender().getNo(),
-                message.getSender().getUserId(),
+                message.getSender().getUsername(),
                 message.getReceiver().getName(),
                 message.getReceiver().getNo(),
-                message.getReceiver().getUserId(),
+                message.getReceiver().getUsername(),
                 message.getSentAt());
     }
 }
