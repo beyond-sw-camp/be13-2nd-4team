@@ -34,13 +34,13 @@ public class TeamUser {
     @JoinColumn(name = "team_no", nullable = false)
     private Team team;
 
-    @Column(nullable = false)
-    private boolean status; // 승인여부
+    @Column
+    private TeamJoinStatus status; // 승인여부
 
     @Column(nullable = false)
     private boolean isLeader;
 
-    public void setStatus(boolean status) {
+    public void setStatus(TeamJoinStatus status) {
         this.status = status;
     }
 }

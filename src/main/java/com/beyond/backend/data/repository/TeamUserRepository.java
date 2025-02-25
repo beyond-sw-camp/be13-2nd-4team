@@ -5,6 +5,7 @@ import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
 import com.beyond.backend.data.entity.ProjectStatus;
 import com.beyond.backend.data.entity.Status;
 import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.TeamJoinStatus;
 import com.beyond.backend.data.entity.TeamUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ import java.util.List;
  * 2025-02-20        hongjm           최초 생성
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  * 2025-02-23        hongjm           기능 추가 및 코드 정리
+ * 2025-02-25        hongjm           TeamJoinStatus 수정
  */
 
 public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
@@ -55,7 +57,7 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
     @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamResponseDto" +
             "(t.no, t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
             "FROM Team t " +
-            "JOIN t.teamUsers tu " +
+            "JOIN TeamUser tu ON t.no = tu.team.no " +
             "WHERE tu.user.no = :userNo")
     Page<TeamResponseDto> findByUserNoForUserTeams(@Param("userNo") Long userNo, Pageable pageable);
 
@@ -72,20 +74,19 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
     Boolean isLeader(@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
 
     /**
-     * 해당 팀의 팀원 요청 조회
+     * 해당 팀에 속한 유저의 상태 조회
      * @param teamNo 팀번호
-     * @return TeamMemberListDto
+     * @param userNo 유저번호
+     * @return 상태값 반환
      */
-    @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamMemberListDto" +
-            "(u.no, u.username, tu.isLeader, tu.status) " +
-            "FROM Team t " +
-            "JOIN TeamUser tu ON t.no = tu.team.no " +
-            "JOIN User u ON u.no = tu.user.no " +
-            "WHERE t.no = :teamNo AND tu.status = FALSE ")
-    List<TeamMemberListDto> findByTeamNoForMemberRequest(@Param("teamNo") Long teamNo);
+    @Query("SELECT tu.status " +
+            "FROM TeamUser tu " +
+            "JOIN User u ON tu.user.no = u.no " +
+            "WHERE tu.team.no = :teamNo AND u.no = :userNo")
+    TeamJoinStatus findByTeamStatus(@Param("teamNo") Long teamNo, @Param("userNo") Long userNo);
 
     /**
-     * 해당 팀의 활성 팀원 조회
+     * 해당 팀의 팀원 조회
      * @param teamNo 팀번호
      * @return TeamMemberListDto
      */
@@ -94,8 +95,8 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "FROM Team t " +
             "JOIN TeamUser tu ON t.no = tu.team.no " +
             "JOIN User u ON u.no = tu.user.no " +
-            "WHERE t.no = :teamNo AND tu.status = true")
-    List<TeamMemberListDto> findByTeamNoForNonLeader(@Param("teamNo") Long teamNo);
+            "WHERE t.no = :teamNo AND tu.status = :status ")
+    List<TeamMemberListDto> findByTeamNoForMember(@Param("teamNo") Long teamNo, @Param("status") TeamJoinStatus status);
 
     /**
      * 유저가 팀에 속해있는지 여부

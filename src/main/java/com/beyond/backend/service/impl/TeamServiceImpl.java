@@ -4,6 +4,8 @@ import com.beyond.backend.data.dto.teamDto.TeamDto;
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
 import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
 import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.Team;
+import com.beyond.backend.data.entity.TeamJoinStatus;
 import com.beyond.backend.data.entity.TeamUser;
 import com.beyond.backend.data.entity.TimePeriod;
 import com.beyond.backend.data.entity.User;
@@ -39,6 +41,7 @@ import java.util.List;
  * 2025-02-20        hongjm           팀 CRUD 정리 및 수정
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  * 2025-02-23        hongjm           기능 추가 및 코드 정리
+ * 2025-02-25        hongjm           TeamJoinStatus 수정
  */
 @Slf4j
 @Service
@@ -78,7 +81,7 @@ public class TeamServiceImpl implements TeamService {
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
 
         // 팀 저장
-        com.beyond.backend.data.entity.Team team = com.beyond.backend.data.entity.Team.builder()
+        Team team = Team.builder()
                 .teamName(teamDto.getTeamName())
                 .teamIntroduce(teamDto.getTeamIntroduce())
                 .projectStatus(teamDto.getProjectStatus())
@@ -90,20 +93,18 @@ public class TeamServiceImpl implements TeamService {
         TeamUser teamUser = TeamUser.builder()
                 .user(user)
                 .team(team)
-                .status(true)
+                .status(TeamJoinStatus.Approved)
                 .isLeader(true)
                 .build();
         teamUserRepository.save(teamUser);
 
-        TeamResponseDto teamResponseDto = new TeamResponseDto(
+        return new TeamResponseDto(
                 team.getNo(),
                 team.getTeamName(),
                 team.getTeamIntroduce(),
                 team.getProjectStatus(),
                 team.getTimePeriod()
         );
-
-        return teamResponseDto;
     }
 
     /**
@@ -116,7 +117,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamResponseDto updateTeam(TeamDto teamDto) throws Exception {
 
-        com.beyond.backend.data.entity.Team searchTeam = teamRepository.findById(teamDto.getNo())
+        Team searchTeam = teamRepository.findById(teamDto.getNo())
                 .orElseThrow(() -> new Exception("팀을 찾을 수 없습니다."));
 
         searchTeam.updateTeamDetails(
@@ -126,7 +127,7 @@ public class TeamServiceImpl implements TeamService {
                 new TimePeriod()
         );
 
-        com.beyond.backend.data.entity.Team updateTeam = teamRepository.save(searchTeam);
+        Team updateTeam = teamRepository.save(searchTeam);
 
         return new TeamResponseDto(
                 updateTeam.getNo(),
@@ -193,7 +194,7 @@ public class TeamServiceImpl implements TeamService {
      */
     @Override
     public void deleteTeam(Long no) throws Exception {
-        com.beyond.backend.data.entity.Team searchTeam = teamRepository.findById(no)
+        Team searchTeam = teamRepository.findById(no)
                 .orElseThrow(() -> new Exception("팀이 존재하지 않습니다."));
 
         teamRepository.deleteById(no);
@@ -203,7 +204,6 @@ public class TeamServiceImpl implements TeamService {
 
     /**
      * 팀원 목록 조회 서비스
-     *
      * @param teamNo 팀번호
      * @return TeamMemberListDto
      * @throws Exception 팀이 존재하지 않습니다.
@@ -213,29 +213,87 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.findById(teamNo)
                 .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
 
-        return teamUserRepository.findByTeamNoForNonLeader(teamNo);
+        return teamUserRepository.findByTeamNoForMember(teamNo,TeamJoinStatus.Approved);
     }
 
     /**
-     * [팀장] 팀원 신청 목록 조회
-     *
+     * 팀원 신청
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @throws Exception 팀이 존재하지 않습니다.
+     * @throws Exception 유저가 존재하지 않습니다.
+     * @throws Exception 모집중이 아닙니다!
+     * @throws Exception 이미 등록되었거나 요청한 팀 입니다!!
+     */
+    @Override
+    public void teamJoinRequest(Long teamNo, Long userNo) throws Exception {
+        if (teamUserRepository.findByUserNoEquals(teamNo, userNo)) {
+            throw new IllegalArgumentException("이미 등록되었거나 요청한 팀 입니다!!");
+        }
+        Team Team = teamRepository.findById(teamNo)
+                .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
+        User user = userRepository.findById(userNo)
+                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
+
+        if (Team.getProjectStatus() != ProjectStatus.OPEN) {
+            throw new IllegalArgumentException("모집중이 아닙니다!");
+        }
+
+        TeamUser teamUser = TeamUser.builder()
+                .user(user)
+                .team(Team)
+                .status(TeamJoinStatus.Pending)
+                .isLeader(false)
+                .build();
+        teamUserRepository.save(teamUser);
+    }
+
+    /**
+     * 팀원 신청 취소
+     * @param teamNo 팀번호
+     * @param userNo 유저번호
+     * @throws Exception 신청하지 않았거나 존재하지 않는 팀입니다.
+     * @throws Exception 이미 처리된 요청입니다.
+     * @throws Exception 팀장 입니다!
+     */
+    @Override
+    public void teamJoinRequestCancel(Long teamNo, Long userNo) throws Exception {
+        Long teamUserNo = teamUserRepository.findByUserNoForTeamUserNo(teamNo, userNo);
+        TeamJoinStatus status = teamUserRepository.findByTeamStatus(teamNo, userNo);
+        Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
+
+        if(isLeader) {
+            throw new IllegalArgumentException("팀장 입니다!");
+        }
+
+        if (teamUserNo == null) {
+            throw new IllegalArgumentException("신청하지 않았거나 존재하지 않는 팀입니다.");
+        } else if (status.equals(TeamJoinStatus.Pending)) {
+            teamUserRepository.deleteById(teamUserNo);
+        } else{
+            throw new IllegalArgumentException("이미 처리된 요청입니다.");
+        }
+    }
+
+    /**
+     * [팀장] 팀원 목록 조회
      * @param teamNo 팀번호
      * @param userNo 유저번호
      * @return TeamMemberListDto
      * @throws Exception 권한이 없습니다!
      */
     @Override
-    public List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception {
+    public List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo, TeamJoinStatus status) throws Exception {
         Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
         if (isLeader != null && isLeader) {
-            return teamUserRepository.findByTeamNoForMemberRequest(teamNo);
+            return teamUserRepository.findByTeamNoForMember(teamNo, status);
         } else {
             throw new IllegalArgumentException("권한이 없습니다!");
         }
     }
 
     /**
-     * [팀장] 팀원 신청 수락
+     * [팀장] 팀원 가입 수락
      * @param teamNo 팀번호
      * @param userNo 신청한 유저의 유저번호
      * @throws Exception 신청한 유저가 없습니다!
@@ -248,11 +306,11 @@ public class TeamServiceImpl implements TeamService {
         TeamUser teamUser = teamUserRepository.findById(teamUserNo)
                 .orElseThrow(() -> new IllegalArgumentException("신청한 유저가 없습니다!"));
 
-        boolean status = teamUser.isStatus();
-        if (status) {
+        TeamJoinStatus status = teamUser.getStatus();
+        if (status == TeamJoinStatus.Approved) {
             throw new IllegalArgumentException("이미 가입된 유저입니다!");
         }else {
-            teamUser.setStatus(true);
+            teamUser.setStatus(TeamJoinStatus.Approved);
             teamUserRepository.save(teamUser);
         }
     }
@@ -262,7 +320,28 @@ public class TeamServiceImpl implements TeamService {
      * @param teamNo 팀번호
      * @param userNo 신청한 유저의 유저번호
      * @throws Exception 신청한 유저가 없습니다!
+     * @throws Exception 팀장 입니다!
      */
+    @Override
+    public void teamDelete(Long teamNo, Long userNo) throws Exception {
+        Long teamUserNo = teamUserRepository.findByUserNoForTeamUserNo(teamNo, userNo);
+        Boolean isLeader = teamUserRepository.isLeader(teamNo, userNo);
+        if(isLeader) {
+            throw new IllegalArgumentException("팀장 입니다!");
+        }
+
+        TeamUser teamUser = teamUserRepository.findById(teamUserNo)
+                .orElseThrow(() -> new IllegalArgumentException("신청한 유저가 없습니다!"));
+
+        teamUser.setStatus(TeamJoinStatus.Rejected);
+        teamUserRepository.save(teamUser);
+    }
+
+    /**
+     * 팀 탈퇴
+     * @param teamNo 팀번호
+     * @param userNo 신청한 유저의 유저번호
+     * @throws Exception 신청한 유저가 없습니다!
     @Override
     public void teamDelete(Long teamNo, Long userNo) throws Exception {
         Long teamUserNo = teamUserRepository.findByUserNoForTeamUserNo(teamNo, userNo);
@@ -274,58 +353,6 @@ public class TeamServiceImpl implements TeamService {
         if (!status) {
             teamUserRepository.deleteById(teamUserNo);
         }
-        // 추방도 가능하지만 일방적인 추방 기능은 논의해봐야할듯
-        // 현재는 유저 스스로 나가는것만 가능
     }
-
-    /**
-     * 팀원 신청
-     *
-     * @param teamNo 팀번호
-     * @param userNo 유저번호
-     * @throws Exception 팀이 존재하지 않습니다.
-     * @throws Exception 유저가 존재하지 않습니다.
-     * @throws Exception 모집중이 아닙니다!
-     * @throws Exception 이미 등록되었거나 요청한 팀 입니다!!
-     */
-    @Override
-    public void teamJoinRequest(Long teamNo, Long userNo) throws Exception {
-
-        if (teamUserRepository.findByUserNoEquals(teamNo, userNo)) {
-            throw new IllegalArgumentException("이미 등록되었거나 요청한 팀 입니다!!");
-        }
-
-        com.beyond.backend.data.entity.Team Team = teamRepository.findById(teamNo)
-                .orElseThrow(() -> new IllegalArgumentException("팀이 존재하지 않습니다."));
-        User user = userRepository.findById(userNo)
-                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다."));
-
-        if (Team.getProjectStatus() != ProjectStatus.OPEN) {
-            throw new IllegalArgumentException("모집중이 아닙니다!");
-        }
-
-        TeamUser teamUser = TeamUser.builder()
-                .user(user)
-                .team(Team)
-                .status(false)
-                .isLeader(false)
-                .build();
-        teamUserRepository.save(teamUser);
-    }
-
-    /**
-     * 팀원 취소
-     * @param teamNo 팀번호
-     * @param userNo 유저번호
-     * @throws Exception 신청하지 않았거나 존재하지 않는 팀입니다.
-     */
-    @Override
-    public void teamJoinRequestCancel(Long teamNo, Long userNo) throws Exception {
-        Long teamUserNo = teamUserRepository.findByUserNoForTeamUserNo(teamNo, userNo);
-        if (teamUserNo == null) {
-            throw new IllegalArgumentException("신청하지 않았거나 존재하지 않는 팀입니다.");
-        } else {
-            teamUserRepository.deleteById(teamUserNo);
-        }
-    }
+    */
 }

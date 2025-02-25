@@ -4,6 +4,7 @@ import com.beyond.backend.data.dto.teamDto.TeamDto;
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
 import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
 import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.TeamJoinStatus;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public interface TeamService {
     List<TeamMemberListDto> getTeamMembers(Long teamNo) throws Exception;
 
     // [팀장] 팀원 신청 목록 조회
-    List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo) throws Exception;
+    List<TeamMemberListDto> getTeamMemberRequest(Long teamNo, Long userNo, TeamJoinStatus status) throws Exception;
 
     // [팀장] 팀원 신청 수락
     void teamAccept(Long teamNo, Long userNo) throws Exception;

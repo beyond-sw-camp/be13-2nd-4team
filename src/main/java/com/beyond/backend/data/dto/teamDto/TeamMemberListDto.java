@@ -1,5 +1,6 @@
 package com.beyond.backend.data.dto.teamDto;
 
+import com.beyond.backend.data.entity.TeamJoinStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ import lombok.Data;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2025-02-22        hongjm           최초 생성
+ * 2025-02-25        hongjm           TeamJoinStatus 수정
  */
 
 @Data
@@ -29,5 +31,5 @@ public class TeamMemberListDto {
 
     private Boolean isLeader;
 
-    private Boolean status;
+    private TeamJoinStatus status;
 }

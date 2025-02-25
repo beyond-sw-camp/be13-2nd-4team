@@ -4,6 +4,7 @@ import com.beyond.backend.data.dto.teamDto.TeamDto;
 import com.beyond.backend.data.dto.teamDto.TeamMemberListDto;
 import com.beyond.backend.data.dto.teamDto.TeamResponseDto;
 import com.beyond.backend.data.entity.ProjectStatus;
+import com.beyond.backend.data.entity.TeamJoinStatus;
 import com.beyond.backend.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,7 +115,7 @@ public class TeamController {
     }
 
     /**
-     *
+     * 모든 팀 조회 메서드
      * @param teamName      (필터) 팀 이름
      * @param teamIntroduce (필터) 팀 상세
      * @param projectStatus (필터) 팀 상태
@@ -127,7 +129,7 @@ public class TeamController {
             @Parameter(name = "teamName" , description = "팀 이름"),
             @Parameter(name = "teamIntroduce" , description = "팀 설명"),
             @Parameter(name = "projectStatus" , description = "프로젝트 상태"),
-            @Parameter(name = "page" , description = "페이지 번호", example = "1"),
+            @Parameter(name = "page" , description = "페이지 번호", example = "0"),
             @Parameter(name = "size" , description = "한 페이지 결과 수", example = "10")
     })
     public ResponseEntity<PageImpl<TeamResponseDto>> getTeams(
@@ -145,7 +147,6 @@ public class TeamController {
 
     /**
      * userNo로 팀 정보를 조회하는 메서드
-     *
      * @param userNo        유저 번호
      * @param teamName      (검색용) 팀이름
      * @param teamIntroduce (검색용) 팀 설명
@@ -161,7 +162,7 @@ public class TeamController {
             @Parameter(name = "teamName" , description = "팀 이름"),
             @Parameter(name = "teamIntroduce" , description = "팀 설명"),
             @Parameter(name = "projectStatus" , description = "프로젝트 상태"),
-            @Parameter(name = "page" , description = "페이지 번호", example = "1"),
+            @Parameter(name = "page" , description = "페이지 번호", example = "0"),
             @Parameter(name = "size" , description = "한 페이지 결과 수", example = "10")
     })
     public ResponseEntity<PageImpl<TeamResponseDto>> getUserTeams(
@@ -194,7 +195,7 @@ public class TeamController {
     }
 
     /**
-     * [팀장] 팀원 신청 목록 조회
+     * [팀장] 팀원 목록 조회
      * @param teamNo 팀번호
      * @param userNo 유저번호
      * @return TeamMemberListDto
@@ -208,8 +209,9 @@ public class TeamController {
     })
     public ResponseEntity<List<TeamMemberListDto>> getMemberRequest(
             @RequestParam Long teamNo,
-            @RequestParam Long userNo) throws Exception {
-        List<TeamMemberListDto> teamMemberRequest = teamService.getTeamMemberRequest(teamNo, userNo);
+            @RequestParam Long userNo,
+            @RequestParam TeamJoinStatus status) throws Exception {
+        List<TeamMemberListDto> teamMemberRequest = teamService.getTeamMemberRequest(teamNo, userNo, status);
 
         return ResponseEntity.status(HttpStatus.OK).body(teamMemberRequest);
     }
@@ -222,7 +224,7 @@ public class TeamController {
      * @throws Exception 신청한 유저가 없습니다!
      * @throws Exception 이미 가입된 유저입니다!
      */
-    @PostMapping("/member/setting/teamAccept")
+    @PutMapping("/member/setting/teamAccept")
     @Operation(summary = "[팀장] 팀원 가입 수락 메서드", description = "팀원 가입 수락 메서드입니다.")
     @Parameters({
             @Parameter(name = "teamNo" , description = "팀 번호", example = "1"),
@@ -242,7 +244,7 @@ public class TeamController {
      * @return 정상적으로 처리 되었습니다.
      * @throws Exception 신청한 유저가 없습니다!
      */
-    @PostMapping("/member/setting/teamDelete")
+    @PutMapping("/member/setting/teamDelete")
     @Operation(summary = "[팀장] 팀원 가입 거부 메서드", description = "팀원 가입 거부 메서드입니다.")
     @Parameters({
             @Parameter(name = "teamNo" , description = "팀 번호", example = "1"),
@@ -274,7 +276,7 @@ public class TeamController {
      * 팀원 가입 신청 메서드
      * @param teamNo 팀번호
      * @param userNo 유저번호
-     * @return 없음
+     * @return 정상적으로 신청되었습니다.
      * @throws Exception 팀이 존재하지 않습니다.
      * @throws Exception 유저가 존재하지 않습니다.
      * @throws Exception 모집중이 아닙니다!
@@ -297,10 +299,11 @@ public class TeamController {
      * 팀원 가입 취소 메서드
      * @param teamNo 팀번호
      * @param userNo 유저번호
-     * @return 없음
+     * @return 정상적으로 취소되었습니다.
      * @throws Exception 신청하지 않았거나 존재하지 않는 팀입니다.
+     * @throws Exception 이미 처리된 요청입니다.
      */
-    @PostMapping("/joinRequestCancel")
+    @DeleteMapping("/joinRequestCancel")
     @Operation(summary = "팀원 가입 취소 메서드", description = "팀원 가입 취소  메서드입니다.")
     @Parameters({
             @Parameter(name = "teamNo" , description = "팀 번호", example = "1"),
