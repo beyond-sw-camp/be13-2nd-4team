@@ -42,6 +42,7 @@ import java.util.List;
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  * 2025-02-23        hongjm           기능 추가 및 코드 정리
  * 2025-02-25        hongjm           TeamJoinStatus 수정
+ * 2025-02-26        hongjm           중복 코드 통합
  */
 @Slf4j
 @Service
@@ -139,32 +140,9 @@ public class TeamServiceImpl implements TeamService {
     }
 
     /**
-     * 모든 팀 정보 조회
-     * @param teamName      (필터) 팀 이름
-     * @param teamIntroduce (필터) 팀 상세
-     * @param projectStatus (필터) 팀 상태
-     * @param page          최소 출력 값
-     * @param size          최대 출력 값
-     * @return PageImpl     필터링 결과값 반환
-     */
-    public PageImpl<TeamResponseDto> allUserTeams(
-            String teamName, String teamIntroduce, ProjectStatus projectStatus, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<TeamResponseDto> teams = teamUserRepository.findByStatusForTeams(projectStatus, pageable);
-
-        List<TeamResponseDto> filteredTeams = teams.stream()
-                .filter(team -> teamName == null || team.getTeamName().contains(teamName))
-                .filter(team -> teamIntroduce == null || team.getTeamIntroduce().contains(teamIntroduce))
-                .filter(team -> projectStatus == null || team.getProjectStatus().equals(projectStatus))
-                .toList();
-
-        return new PageImpl<>(filteredTeams, pageable, teams.getTotalElements());
-    }
-
-    /**
      * userNo로 팀 정보 조회 서비스
      *
-     * @param userNo        유저 번호
+     * @param userNo        (필터) 유저 번호
      * @param teamName      (필터) 팀이름
      * @param teamIntroduce (필터) 팀 설명
      * @param projectStatus (필터) 팀 상태

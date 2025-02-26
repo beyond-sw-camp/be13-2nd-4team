@@ -32,25 +32,14 @@ import java.util.List;
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  * 2025-02-23        hongjm           기능 추가 및 코드 정리
  * 2025-02-25        hongjm           TeamJoinStatus 수정
+ * 2025-02-26        hongjm           중복 코드 통합
  */
 
 public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
 
     /**
      * 모든 팀 정보 조회
-     * @param status  (필터) 팀 상태
-     * @param pageable 페이징 크기
-     * @return TeamResponseDto
-     */
-    @Query("SELECT new com.beyond.backend.data.dto.teamDto.TeamResponseDto" +
-            "(t.no, t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
-            "FROM Team t " +
-            "WHERE (:status IS NULL OR  t.projectStatus = :status)")
-    Page<TeamResponseDto> findByStatusForTeams(@Param("status") ProjectStatus status, Pageable pageable);
-
-    /**
-     * 유저가 활동한 모든 팀 조회
-     * @param userNo 유저번호
+     * @param userNo (필터) 유저번호
      * @param pageable 페이징 크기
      * @return TeamSearchDto
      */
@@ -58,7 +47,7 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "(t.no, t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
             "FROM Team t " +
             "JOIN TeamUser tu ON t.no = tu.team.no " +
-            "WHERE tu.user.no = :userNo")
+            "WHERE (:userNo IS NULL OR tu.user.no = :userNo)")
     Page<TeamResponseDto> findByUserNoForUserTeams(@Param("userNo") Long userNo, Pageable pageable);
 
     /**

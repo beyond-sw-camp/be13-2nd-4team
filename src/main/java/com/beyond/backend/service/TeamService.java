@@ -28,6 +28,7 @@ import java.util.List;
  * 2025-02-20        hongjm           팀 CRUD 수정
  * 2025-02-22        hongjm           팀원 추가/제거 등등 기능 추가
  * 2025-02-24        hongjm           코드 정리
+ * 2025-02-26        hongjm           중복 코드 통합
  */
 
 public interface TeamService {
@@ -38,9 +39,6 @@ public interface TeamService {
     TeamResponseDto updateTeam(TeamDto team) throws Exception;
 
     // 모든 팀 정보 조회
-    PageImpl<TeamResponseDto> allUserTeams(String teamName, String teamIntroduce, ProjectStatus projectStatus, int page, int size);
-
-    // userNo로 팀 정보 조회
     PageImpl<TeamResponseDto> filterUserTeams(
             Long userNo, String teamName, String teamIntroduce, ProjectStatus projectStatus, int page, int size);
 
