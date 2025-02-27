@@ -37,5 +37,4 @@ public class TeamResponseDto {
 
     private ProjectStatus projectStatus;
 
-    private TimePeriod timePeriod;
 }

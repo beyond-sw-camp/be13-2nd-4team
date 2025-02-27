@@ -26,7 +26,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * 2025-02-04        jaewoo             카멜케이스로 네이밍 변환
  */
 @Getter
-@Setter
 @ToString
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

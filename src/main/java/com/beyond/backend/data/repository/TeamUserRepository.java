@@ -1,5 +1,7 @@
 package com.beyond.backend.data.repository;
 
+import java.util.List;
+
 import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.TeamUser;
 import org.springframework.data.domain.Page;
@@ -40,4 +42,8 @@ public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
             "JOIN Team t ON tu.team.no = t.no " +
             "WHERE u.no = :userNo")
     Page<TeamSearchDto> findUserTeams(@Param("userNo") Long userNo, Pageable pageable);
+
+    // [홍도현] userNo가 teamNo에 속해 있는지 확인 (존재하면 true, 없으면 false 반환)
+    boolean existsByUserNoAndTeamNo(Long userNo, Long teamNo);
+
 }

@@ -64,6 +64,8 @@ public class TeamServiceImpl implements TeamService {
      * @param teamDto 팀 생성 정보
      * @return teamResponseDto
      */
+
+    // timePeriod 객체 삭제  ->  생성자에서 설정 삭제
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
         User user = userRepository.findById(teamDto.getId())

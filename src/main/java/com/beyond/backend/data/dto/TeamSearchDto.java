@@ -36,6 +36,4 @@ public class TeamSearchDto {
 
     private ProjectStatus projectStatus;
 
-    private TimePeriod timePeriod;
-
 }

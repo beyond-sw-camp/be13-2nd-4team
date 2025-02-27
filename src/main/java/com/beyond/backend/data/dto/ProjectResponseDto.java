@@ -43,7 +43,6 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectResponseDto {
 
     private Long id;
@@ -56,13 +55,15 @@ public class ProjectResponseDto {
 
     private ProjectStatus projectStatus;
 
-    private ProjectType projectType;
-
-    private List<FeedBack> feedBacks = new ArrayList<>();
-
-    private List<ProjectTech> projectTeches;
-
     private Long teamNo;
 
-    private TimePeriod timePeriod;
+
+    public ProjectResponseDto(Project project) {
+        this.no = project.getNo();
+        this.name = project.getName();
+        this.projectPurpose = project.getProjectPurpose();
+        this.projectSubject = project.getProjectSubject();
+        this.projectStatus = project.getProjectStatus();
+        this.teamNo = project.getTeam().getNo();
+    }
 }

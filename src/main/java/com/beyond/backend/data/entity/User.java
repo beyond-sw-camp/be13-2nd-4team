@@ -3,7 +3,6 @@ package com.beyond.backend.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,8 +51,6 @@ public class User {
     @Column(nullable = false)
     private Status status; //ACTIVE, INACTIVE, DELETED
 
-    @Embedded
-    private TimePeriod timePeriod;
 
     private String email;
 
@@ -84,6 +81,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookMark> bookmarks;
+
 
     // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     // private Set<Post> posts = new HashSet<>();

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "likes", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"post_no", "user_no"})
