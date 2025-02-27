@@ -1,7 +1,5 @@
 package com.beyond.backend.data.entity;
 
-import com.beyond.backend.data.entity.Project;
-import com.beyond.backend.data.entity.Tech;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

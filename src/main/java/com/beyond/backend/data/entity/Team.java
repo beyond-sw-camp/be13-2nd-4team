@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "teams")
-public class Team {
+public class Team extends BaseEntity{
 
     @Id
     @GeneratedValue

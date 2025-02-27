@@ -14,8 +14,7 @@ import java.util.List;
 @Getter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
-public class Post {
+public class Post extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 당장은 필요없지만 확장성 위해

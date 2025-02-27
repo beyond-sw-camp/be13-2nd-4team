@@ -1,7 +1,6 @@
 package com.beyond.backend.data.dto;
 
 import com.beyond.backend.data.entity.ProjectStatus;
-import com.beyond.backend.data.entity.TimePeriod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

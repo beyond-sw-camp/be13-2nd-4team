@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
                 @UniqueConstraint(name = "unique_retrospective",
                                   columnNames = {"user_no", "project_no", "feedbackType"})
         })
-public class FeedBack {
+public class FeedBack extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;

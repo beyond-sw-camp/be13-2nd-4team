@@ -36,7 +36,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface TeamUserRepository extends JpaRepository<TeamUser, Long> {
 
-    @Query("SELECT new com.beyond.backend.data.dto.TeamSearchDto(t.teamName, t.teamIntroduce, t.projectStatus, t.timePeriod) " +
+    @Query("SELECT new com.beyond.backend.data.dto.TeamSearchDto(t.teamName, t.teamIntroduce, t.projectStatus) " +
             "FROM User u " +
             "JOIN TeamUser tu ON u.no = tu.user.no " +
             "JOIN Team t ON tu.team.no = t.no " +

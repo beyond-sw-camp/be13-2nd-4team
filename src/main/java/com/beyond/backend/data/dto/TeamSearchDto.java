@@ -1,13 +1,9 @@
 package com.beyond.backend.data.dto;
 
 import com.beyond.backend.data.entity.ProjectStatus;
-import com.beyond.backend.data.entity.TimePeriod;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 /**
  * <p> 팀 검색 Dto
