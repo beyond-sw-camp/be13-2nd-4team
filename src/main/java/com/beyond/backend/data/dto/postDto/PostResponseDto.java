@@ -32,7 +32,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PostResponseDto {
 
-    private Long id;
+    private Long postNo;
     private String title;
     private String content;
     private String userName;
@@ -42,7 +42,7 @@ public class PostResponseDto {
 
     @Builder
     public PostResponseDto(Post post) {
-        this.id = post.getNo();
+        this.postNo = post.getNo();
         this.title = post.getPostTitle();
         this.content = post.getPostContent();
         this.userName = post.getUser().getUsername();

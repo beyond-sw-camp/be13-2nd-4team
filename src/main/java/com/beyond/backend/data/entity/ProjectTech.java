@@ -31,6 +31,6 @@ public class ProjectTech {
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tech_no", referencedColumnName = "no", nullable = false)
+    @JoinColumn(name = "tech_no", nullable = false)
     private Tech tech;
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@ToString
 @AllArgsConstructor
 public class Post extends BaseEntity{
 
@@ -35,13 +34,8 @@ public class Post extends BaseEntity{
     private BoardType boardType;
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'ALL'")
     private SearchOption searchOption;
 
-    @Embedded
-    private TimePeriod timePeriod;
-
-    // FK
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no", nullable = false)
@@ -50,10 +44,10 @@ public class Post extends BaseEntity{
 
     //============================
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
 
     //좋아요 연관관계 로직
@@ -61,6 +55,11 @@ public class Post extends BaseEntity{
         return likes.size();
     }
 
-    //    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    //    private List<BookMark> bookmarks;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookMark> bookmarks = new ArrayList<>();
+
+
+    protected Post() {
+    }
+
 }

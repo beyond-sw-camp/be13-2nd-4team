@@ -39,10 +39,10 @@ public class Team extends BaseEntity{
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
-    public void updateTeamDetails(String teamName, String teamIntroduce, ProjectStatus projectStatus, TimePeriod timePeriod) {
+    public void updateTeamDetails(String teamName, String teamIntroduce, ProjectStatus projectStatus) {
         this.teamName = teamName;
         this.teamIntroduce = teamIntroduce;
         this.projectStatus = projectStatus;
-        this.timePeriod = timePeriod;
+
     }
 }

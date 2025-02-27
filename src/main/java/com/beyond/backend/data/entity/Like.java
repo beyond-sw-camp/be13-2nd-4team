@@ -26,4 +26,8 @@ public class Like {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no", nullable = false)
     private User user;
+
+    protected Like(){
+
+    }
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-public class User {
+public class User extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class User {
     private String phoneNum;
 
     @Builder
-    public User(String username, String name, String password, String phoneNum, String address, String email, Status status, TimePeriod timePeriod) {
+    public User(String username, String name, String password, String phoneNum, String address, String email, Status status ) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -44,7 +44,7 @@ public class User {
         this.address = address;
         this.email = email;
         this.status = status;
-        this.timePeriod = timePeriod;
+
     }
 
     private String address;
