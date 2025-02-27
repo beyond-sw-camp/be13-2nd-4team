@@ -5,7 +5,6 @@ import com.beyond.backend.data.dto.TeamResponseDto;
 import com.beyond.backend.data.dto.TeamSearchDto;
 import com.beyond.backend.data.entity.Team;
 import com.beyond.backend.data.entity.TeamUser;
-import com.beyond.backend.data.entity.TimePeriod;
 import com.beyond.backend.data.entity.User;
 import com.beyond.backend.data.repository.TeamRepository;
 import com.beyond.backend.data.repository.TeamUserRepository;
@@ -64,6 +63,8 @@ public class TeamServiceImpl implements TeamService {
      * @param teamDto 팀 생성 정보
      * @return teamResponseDto
      */
+
+    // timePeriod 객체 삭제  ->  생성자에서 설정 삭제
     @Override
     public TeamResponseDto createTeam(TeamDto teamDto) {
         User user = userRepository.findById(teamDto.getId())
@@ -74,7 +75,6 @@ public class TeamServiceImpl implements TeamService {
                 .teamName(teamDto.getTeamName())
                 .teamIntroduce(teamDto.getTeamIntroduce())
                 .projectStatus(teamDto.getProjectStatus())
-                .timePeriod(new TimePeriod())
                 .build();
         team = teamRepository.save(team);
 
@@ -90,8 +90,7 @@ public class TeamServiceImpl implements TeamService {
                 team.getNo(),
                 team.getTeamName(),
                 team.getTeamIntroduce(),
-                team.getProjectStatus(),
-                team.getTimePeriod()
+                team.getProjectStatus()
         );
 
         return teamResponseDto;
@@ -112,8 +111,7 @@ public class TeamServiceImpl implements TeamService {
         searchTeam.updateTeamDetails(
                 teamDto.getTeamName(),
                 teamDto.getTeamIntroduce(),
-                teamDto.getProjectStatus(),
-                new TimePeriod()
+                teamDto.getProjectStatus()
         );
 
         Team updateTeam = teamRepository.save(searchTeam);
@@ -122,8 +120,7 @@ public class TeamServiceImpl implements TeamService {
                 updateTeam.getNo(),
                 updateTeam.getTeamName(),
                 updateTeam.getTeamIntroduce(),
-                updateTeam.getProjectStatus(),
-                updateTeam.getTimePeriod()
+                updateTeam.getProjectStatus()
         );
     }
 
